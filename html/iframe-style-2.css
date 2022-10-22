@@ -1,0 +1,88 @@
+ody, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+.e-icon {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='8.414' height='8.414'%3e%3cpath fill='%23FFF' d='M8.414 1.414L7 0 4.207 2.793 1.414 0 0 1.414l2.793 2.793L0 7l1.414 1.414 2.793-2.793L7 8.414 8.414 7 5.621 4.207z'/%3e%3c/svg%3e");
+    color: white;
+    margin-right: 8px;
+    display: inline-block;
+    height: 9px;
+    width: 9px;
+    background-size: cover;
+    vertical-align: middle;
+}
+#ts-envato-header a {
+    opacity: 1;
+    text-decoration: none;
+}
+#ts-envato-header {
+    top: 0;
+    left: 0;
+    width: 100%;
+    font-size: 12px;
+    height: 54px;
+    background-color: #262626;
+    z-index: 100;
+    line-height: 54px;
+}
+.preview__envato-logo {
+    float: left;
+    padding: 0 20px;
+}
+.preview__envato-logo a {
+    opacity: 1;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    position: absolute;
+    top: 18px;
+    text-indent: -9999px;
+    height: 18px;
+    width: 152px;
+    background: url(https://public-assets.envato-static.com/assets/logos/envato_market-a5ace93f8482e885ae008eb481b9451d379599dfed24868e52b6b2d66f5cf633.svg);
+    background-size: auto auto;
+    background-size: 152px 18px;
+}
+.preview__actions {
+    float: right;
+}
+.preview__action--buy {
+    display: inline-block;
+    padding: 0 20px;
+}
+.e-btn--3d {
+    box-sizing: border-box;
+    display: inline-block;
+    margin: 0;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    color: white;
+    font-size: 14px;
+    padding: 5px 20px;
+    line-height: 1.5;
+    background-color: #82b440;
+    box-shadow: 0 2px 0 #6f9a37;
+    position: relative;
+}
+.preview__action--close {
+    border-left: 1px solid #333333;
+    display: inline-block;
+    padding: 0 20px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.preview__action--close a {
+    color: #999999;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}

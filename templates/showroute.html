@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
+    <link href="assets/fonts/font-awesome.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/bootstrap-select.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/jquery.slider.min.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/osm.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/leaflet.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/MarkerCluster.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    {{map.header.render|safe}}
+</head>
+
+<style>
+    body { margin:0; padding:0; }
+    #map { position: absolute; top:0; bottom:0; right:0; left:0; }
+  </style>
+  <link rel="stylesheet" href="assets/fonts/font-awesome.css">
+
+<body class="page-homepage map-osm" id="page-top" data-spy="scroll" data-target=".navigation" data-offset="90">
+<!-- Wrapper -->
+<div class="wrapper">
+
+    <div class="navigation">
+        <div class="container">
+            <header class="navbar" id="top" role="banner">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="navbar-brand nav" id="brand">
+                        <a href="index-google-map-fullscreen.html"><img src="assets/img/logo.png" alt="brand"></a>
+                    </div>
+                </div>
+                <div class="add-your-property">
+                    <a href="submit.html" class="btn btn-default"><i class="fa fa-plus"></i><span class="text">Add Your Property</span></a>
+                </div>
+            </header><!-- /.navbar -->
+        </div><!-- /.container -->
+    </div><!-- /.navigation -->
+
+    <div class="container">
+        <div class="geo-location-wrapper">
+            <span class="btn geo-location"><i class="fa fa-map-marker"></i><span class="text">Find My Position</span></span>
+        </div>
+    </div>
+
+    <!-- Map -->
+    <div id="map"></div>
+    <!-- end Map -->
+
+    <!-- Search Box -->
+    <div class="search-box-wrapper">
+        <div class="search-box-inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-4">
+                        <div class="search-box map">
+                            <form role="form" id="form-map" class="form-map form-search">
+                                <h2>Search Your Property</h2>
+                                <div class="form-group">
+                                    <select name="score">
+                                        <option value="">Оценка</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">1</option>
+                                        <option value="4">2</option>
+                                        <option value="5">1</option>
+                                    </select>
+                                </div><!-- /.form-group -->
+                                <div class="form-group">
+                                    <select name="type">
+                                        <option value="">Тип</option>
+                                        <option value="1">Брусчатка</option>
+                                        <option value="2">Ямы</option>
+                                        <option value="3">Поребрики</option>
+                                        <option value="4">Ливневка</option>
+                                    </select>
+                                </div><!-- /.form-group -->
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="search-box-property-info" placeholder="Комментарий">
+                                </div>
+                                <div class="form-group">
+                                    <div class="price-range">
+                                        <input id="price-input" type="text" name="price" value="1000;299000">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-default">Отправить</button>
+                                </div><!-- /.form-group -->
+                            </form><!-- /#form-map -->
+                        </div><!-- /.search-box.map -->
+                    </div><!-- /.col-md-3 -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div><!-- /.search-box-inner -->
+    </div>
+    <!-- end Search Box -->
+
+    <!-- Page Footer -->
+    <footer id="page-footer">
+        <div class="inner">
+            <aside id="footer-main">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3">
+                            <article>
+                                <h3>About Us</h3>
+                                <p>Vel fermentum ipsum. Suspendisse quis molestie odio. Interdum et malesuada fames ac ante ipsum
+                                    primis in faucibus. Quisque aliquet a metus in aliquet. Praesent ut turpis posuere, commodo odio
+                                    id, ornare tortor
+                                </p>
+                                <hr>
+                                <a href="#" class="link-arrow">Read More</a>
+                            </article>
+                        </div><!-- /.col-sm-3 -->
+                        <div class="col-md-3 col-sm-3">
+                            <article>
+                                <h3>Recent Properties</h3>
+                                <div class="property small">
+                                    <a href="property-detail.html">
+                                        <div class="property-image">
+                                            <img alt="" src="assets/img/properties/property-06.jpg">
+                                        </div>
+                                    </a>
+                                    <div class="info">
+                                        <a href="property-detail.html"><h4>2186 Rinehart Road</h4></a>
+                                        <figure>Doral, FL 33178 </figure>
+                                        <div class="tag price">$ 72,000</div>
+                                    </div>
+                                </div><!-- /.property -->
+                                <div class="property small">
+                                    <a href="property-detail.html">
+                                        <div class="property-image">
+                                            <img alt="" src="assets/img/properties/property-09.jpg">
+                                        </div>
+                                    </a>
+                                    <div class="info">
+                                        <a href="property-detail.html"><h4>2479 Murphy Court</h4></a>
+                                        <figure>Minneapolis, MN 55402</figure>
+                                        <div class="tag price">$ 36,000</div>
+                                    </div>
+                                </div><!-- /.property -->
+                            </article>
+                        </div><!-- /.col-sm-3 -->
+                        <div class="col-md-3 col-sm-3">
+                            <article>
+                                <h3>Contact</h3>
+                                <address>
+                                    <strong>Your Company</strong><br>
+                                    4877 Spruce Drive<br>
+                                    West Newton, PA 15089
+                                </address>
+                                +1 (734) 123-4567<br>
+                                <a href="#">hello@example.com</a>
+                            </article>
+                        </div><!-- /.col-sm-3 -->
+                        <div class="col-md-3 col-sm-3">
+                            <article>
+                                <h3>Useful Links</h3>
+                                <ul class="list-unstyled list-links">
+                                    <li><a href="#">All Properties</a></li>
+                                    <li><a href="#">Privacy Policy</a></li>
+                                    <li><a href="#">Login and Register Account</a></li>
+                                    <li><a href="#">FAQ</a></li>
+                                    <li><a href="#">Terms and Conditions</a></li>
+                                </ul>
+                            </article>
+                        </div><!-- /.col-sm-3 -->
+                    </div><!-- /.row -->
+                </div><!-- /.container -->
+            </aside><!-- /#footer-main -->
+            <aside id="footer-thumbnails" class="footer-thumbnails"></aside><!-- /#footer-thumbnails -->
+            <aside id="footer-copyright">
+                <div class="container">
+                    <span>Copyright © 2013. All Rights Reserved.</span>
+                    <span class="pull-right"><a href="#page-top" class="roll">Go to top</a></span>
+                </div>
+            </aside>
+        </div><!-- /.inner -->
+    </footer>
+    <!-- end Page Footer -->
+</div>
+
+<div id="overlay"></div>
+
+<script type="text/javascript" src="assets/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/js/smoothscroll.js"></script>
+<script type="text/javascript" src="assets/js/owl.carousel.min.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery.placeholder.js"></script>
+<script type="text/javascript" src="assets/js/icheck.min.js"></script>
+<script type="text/javascript" src="assets/js/jquery.vanillabox-0.1.5.min.js"></script>
+<script type="text/javascript" src="assets/js/retina-1.1.0.min.js"></script>
+<script type="text/javascript" src="assets/js/smoothscroll.js"></script>
+<script type="text/javascript" src="assets/js/jshashtable-2.1_src.js"></script>
+<script type="text/javascript" src="assets/js/jquery.numberformatter-1.2.3.js"></script>
+<script type="text/javascript" src="assets/js/tmpl.js"></script>
+<script type="text/javascript" src="assets/js/jquery.dependClass-0.1.js"></script>
+<script type="text/javascript" src="assets/js/draggable-0.1.js"></script>
+<script type="text/javascript" src="assets/js/jquery.slider.js"></script>
+<script type="text/javascript" src="assets/js/custom-map.js"></script>
+<script type="text/javascript" src="assets/js/custom.js"></script>
+	{% if map %}
+
+  	{{map.html.render|safe}}
+  	<script>
+    	{{map.script.render|safe}}
+  	</script>
+	{% endif %}
+</body>
+</html>
+
