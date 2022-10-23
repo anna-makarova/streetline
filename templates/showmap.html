@@ -1,22 +1,22 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
-    <link href="/templates/assets/fonts/font-awesome.css" rel="stylesheet" type="text/css">
-{#    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">#}
-    <link rel="stylesheet" href="/templates/assets/bootstrap/css/bootstrap.css" type="text/css">
-    <link rel="stylesheet" href="/templates/assets/css/bootstrap-select.min.css" type="text/css">
-    <link rel="stylesheet" href="/templates/assets/css/jquery.slider.min.css" type="text/css">
-    <link rel="stylesheet" href="/templates/assets/css/owl.carousel.css" type="text/css">
-    <link rel="stylesheet" href="/templates/assets/css/osm.css" type="text/css">
-    <link rel="stylesheet" href="/templates/assets/css/leaflet.css" type="text/css">
-    <link rel="stylesheet" href="/templates/assets/css/MarkerCluster.css" type="text/css">
-{#    <link rel="stylesheet" href="{% static 'css/style.css' %}">#}
-    <link rel="stylesheet" href="/templates/assets/css/style.css" type="text/css">
+    {% block static %}
+        <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
+        <link href="{% static 'fonts/font-awesome.css' %}" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/jquery.slider.min.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/osm.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/leaflet.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/MarkerCluster.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    {% endblock %}
 
   <!-- Load Leaflet from CDN -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -40,7 +40,7 @@
     crossorigin=""></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-  <link rel="stylesheet" href="assets/fonts/font-awesome.css">
+  <link rel="stylesheet" href="{% static 'fonts/font-awesome.css' %}">
 </head>
 <body class="page-homepage map-osm" id="page-top" data-spy="scroll" data-target=".navigation" data-offset="90">
 <!-- Wrapper -->
@@ -170,26 +170,26 @@
 
 <div id="overlay"></div>
 
-<script type="text/javascript" src="assets/js/jquery-2.1.0.min.js"></script>
-<script type="text/javascript" src="assets/js/jquery-migrate-1.2.1.min.js"></script>
-<script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="assets/js/smoothscroll.js"></script>
-<script type="text/javascript" src="assets/js/owl.carousel.min.js"></script>
-<script type="text/javascript" src="assets/js/bootstrap-select.min.js"></script>
-<script type="text/javascript" src="assets/js/jquery.validate.min.js"></script>
-<script type="text/javascript" src="assets/js/jquery.placeholder.js"></script>
-<script type="text/javascript" src="assets/js/icheck.min.js"></script>
-<script type="text/javascript" src="assets/js/jquery.vanillabox-0.1.5.min.js"></script>
-<script type="text/javascript" src="assets/js/retina-1.1.0.min.js"></script>
-<script type="text/javascript" src="assets/js/smoothscroll.js"></script>
-<script type="text/javascript" src="assets/js/jshashtable-2.1_src.js"></script>
-<script type="text/javascript" src="assets/js/jquery.numberformatter-1.2.3.js"></script>
-<script type="text/javascript" src="assets/js/tmpl.js"></script>
-<script type="text/javascript" src="assets/js/jquery.dependClass-0.1.js"></script>
-<script type="text/javascript" src="assets/js/draggable-0.1.js"></script>
-<script type="text/javascript" src="assets/js/jquery.slider.js"></script>
-<script type="text/javascript" src="assets/js/custom-map.js"></script>
-<script type="text/javascript" src="assets/js/custom.js"></script>
+<script type="text/javascript" src="{% static 'js/jquery-2.1.0.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery-migrate-1.2.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/smoothscroll.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-select.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.validate.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.placeholder.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/icheck.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.vanillabox-0.1.5.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/retina-1.1.0.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/smoothscroll.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jshashtable-2.1_src.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.numberformatter-1.2.3.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/tmpl.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.dependClass-0.1.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/draggable-0.1.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.slider.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/custom-map.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
 
 <script>
   var map = L.map('map').setView([56.8,60.6], 12);
@@ -203,7 +203,7 @@
     count+=1;
     gcs.reverse().latlng(e.latlng).run((err, res)=>{
       if(err) return;
-      L.marker(res.latlng).addTo(map).bindPopup(res.address.Match_addr).openPopup();
+<!--      L.marker(res.latlng).addTo(map).bindPopup(res.address.Match_addr).openPopup();  предположительно косяк-->
       k=count.toString()
       data[k+'lat']=res.latlng['lat'];
       data[k+'lon']=res.latlng['lng'];
