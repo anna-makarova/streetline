@@ -16,25 +16,6 @@
         <link rel="stylesheet" href="{% static  'css/leaflet.css' %}" type="text/css">
         <link rel="stylesheet" href="{% static  'css/MarkerCluster.css' %}" type="text/css">
         <link rel="stylesheet" href="{% static  'css/style.css' %}" type="text/css">
-        <script type="text/javascript" src="{% static 'js/jquery-2.1.0.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/jquery-migrate-1.2.1.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/smoothscroll.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/bootstrap-select.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/jquery.validate.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/jquery.placeholder.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/icheck.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/jquery.vanillabox-0.1.5.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/retina-1.1.0.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/jshashtable-2.1_src.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/jquery.numberformatter-1.2.3.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/tmpl.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/jquery.dependClass-0.1.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/draggable-0.1.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/jquery.slider.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/custom-map.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
         <link rel="stylesheet" href="{% static 'fonts/font-awesome.css' %}">
     {{map.header.render|safe}}
 </head>
@@ -88,15 +69,11 @@
     <!-- end Map -->
 
     <!-- Search Box -->
-    <div class="search-box-wrapper">
-        <div class="search-box-inner">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3 col-sm-4">
-                        <div class="search-box map">
-                            <form role="form" id="form-map" class="form-map form-search">
+
+                            <form method="post" role="form" id="form-map">
+                                {% csrf_token %}
                                 <h2>Оцените качество дороги</h2>
-                                <div class="form-group">
+                                <div>
                                     <select name="score">
                                         <option value="">Оценка</option>
                                         <option value="1">1</option>
@@ -106,28 +83,23 @@
                                         <option value="5">5</option>
                                     </select>
                                 </div><!-- /.form-group -->
-                                <div class="form-group">
+                                <div >
                                     <select name="type">
                                         <option value="">Тип</option>
-                                        <option value="1">Брусчатка</option>
-                                        <option value="2">Ямы</option>
-                                        <option value="3">Поребрики</option>
-                                        <option value="4">Ливневка</option>
+                                        <option value="0">Брусчатка</option>
+                                        <option value="1">Ямы</option>
+                                        <option value="2">Поребрики</option>
+                                        <option value="3">Ливневка</option>
                                     </select>
                                 </div><!-- /.form-group -->
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="search-box-property-info" placeholder="Комментарий">
+                                <div>
+                                    <input name="comment" type="text" class="form-control" id="search-box-property-info" placeholder="Комментарий">
                                 </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-default">Отправить</button>
+                                <div>
+                                    <button name="add_to_db_form" type="submit"  class="btn btn-default">Отправить</button>
                                 </div><!-- /.form-group -->
                             </form><!-- /#form-map -->
-                        </div><!-- /.search-box.map -->
-                    </div><!-- /.col-md-3 -->
-                </div><!-- /.row -->
-            </div><!-- /.container -->
-        </div><!-- /.search-box-inner -->
-    </div>
+
     <!-- end Search Box -->
 
     <!-- Page Footer -->

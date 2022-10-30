@@ -17,12 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from route.views import showroute,showmap
+from route.views import showroute, showmap, register_page, login_page
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('<str:lat1>,<str:long1>,<str:lat2>,<str:long2>',showroute,name='showroute'),
-    path('',showmap,name='showmap'),
+    path('register/', register_page, name='register'),
+    path('login/', login_page, name='login'),
+    path('<str:lat_start>,<str:long_start>,<str:lat_stop>,<str:long_stop>', showroute, name='showroute'),
+    path('', showmap, name='showmap'),
     ] + staticfiles_urlpatterns()
-    
+
