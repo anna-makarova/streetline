@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="{% static  'css/leaflet.css' %}" type="text/css">
         <link rel="stylesheet" href="{% static  'css/MarkerCluster.css' %}" type="text/css">
         <link rel="stylesheet" href="{% static  'css/style.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static  'css/myowncss.css' %}" type="text/css">
         <link rel="stylesheet" href="{% static 'fonts/font-awesome.css' %}">
     {{map.header.render|safe}}
 </head>
@@ -23,15 +24,15 @@
 <style>
     body { margin:0; padding:0; }
     #map { position: absolute; top:0; bottom:0; right:0; left:0; }
+    {##search {position: relative; background-color: #2a6496}#}
   </style>
 
 
 <body class="page-homepage map-osm" id="page-top" data-spy="scroll" data-target=".navigation" data-offset="90">
 <!-- Wrapper -->
 <div class="wrapper">
-
-    <div class="navigation">
-        <div class="container">
+    <div class="container">
+        <div class="navigation">
             <header class="navbar" id="top" role="banner">
                 <div class="navbar-header">
                     <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
@@ -48,14 +49,55 @@
                     <a href="submit.html" class="btn btn-default"><i class="fa fa-plus"></i><span class="text">Add Your Property</span></a>
                 </div>
             </header><!-- /.navbar -->
-        </div><!-- /.container -->
-    </div><!-- /.navigation -->
-
-    <div class="container">
-        <div class="geo-location-wrapper">
-            <span class="btn geo-location"><i class="fa fa-map-marker"></i><span class="text">Find My Position</span></span>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="geo-location-wrapper">
+                    <span class="btn geo-location"><i class="fa fa-map-marker"></i><span class="text">Find My Position</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="grade-wrapper">
+                    <div class="grade-box">
+                        <form method= "post" role="form" id="form-map">
+                            {% csrf_token %}
+                            <h2>Оцените качество дороги</h2>
+                            <div>
+                                <select name="score" class="grade-element">
+                                            <option class="element-option" value="">Оценка</option>
+                                            <option class="element-option" value="1">1</option>
+                                            <option class="element-option" value="2">2</option>
+                                            <option class="element-option" value="3">3</option>
+                                            <option class="element-option" value="4">4</option>
+                                            <option class="element-option" value="5">5</option>
+                                </select>
+                            </div><!-- /.form-group -->
+                            <div>
+                                <select name="type" class="grade-element">
+                                            <option class="element-option" value="">Тип</option>
+                                            <option class="element-option" value="0">Брусчатка</option>
+                                            <option class="element-option" value="1">Ямы</option>
+                                            <option class="element-option" value="2">Поребрики</option>
+                                            <option class="element-option" value="3">Ливневка</option>
+                                </select>
+                            </div><!-- /.form-group -->
+                            <div>
+                                <input name="comment" type="text" class="grade-element" id="search-box-property-info" placeholder="Комментарий">
+                            </div>
+                            <div>
+                                <button name="add_to_db_form" type="submit" class="grade-button">Отправить</button>
+                            </div><!-- /.form-group -->
+                        </form><!-- /#form-map -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+
+
 
     <!-- Map -->
     <div id="map">
@@ -70,35 +112,8 @@
 
     <!-- Search Box -->
 
-                            <form method="post" role="form" id="form-map">
-                                {% csrf_token %}
-                                <h2>Оцените качество дороги</h2>
-                                <div>
-                                    <select name="score">
-                                        <option value="">Оценка</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div><!-- /.form-group -->
-                                <div >
-                                    <select name="type">
-                                        <option value="">Тип</option>
-                                        <option value="0">Брусчатка</option>
-                                        <option value="1">Ямы</option>
-                                        <option value="2">Поребрики</option>
-                                        <option value="3">Ливневка</option>
-                                    </select>
-                                </div><!-- /.form-group -->
-                                <div>
-                                    <input name="comment" type="text" class="form-control" id="search-box-property-info" placeholder="Комментарий">
-                                </div>
-                                <div>
-                                    <button name="add_to_db_form" type="submit"  class="btn btn-default">Отправить</button>
-                                </div><!-- /.form-group -->
-                            </form><!-- /#form-map -->
+    </div>
+
 
     <!-- end Search Box -->
 

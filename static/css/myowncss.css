@@ -1,0 +1,60 @@
+.grade-wrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+.grade-box {
+    position: absolute;
+    transition: 0.4s;
+    background-color: rgba(255, 255, 255, 0.4);
+    padding: 5px 10px 1px 10px;
+}
+.grade-box h2 {
+    font-size: 24px;
+    font-weight: lighter;
+    color: #5a5a5a;
+    font-family: 'Roboto', sans-serif;
+}
+.grade-element {
+    background-color: #073855;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    min-height: 40px;
+    padding: 10px 9px 9px 9px;
+    margin: 5px 0;
+    width: 100%;
+    transition: 0.3s;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2) inset;
+}
+.grade-element :hover {
+    background-color: #062f47;
+}
+.grade-element :focus {
+    background-color: #062f47;
+    -moz-box-shadow: 0px 1px 2px transparent, inset 0px 2px 2px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0px 1px 2px transparent, inset 0px 2px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 2px transparent, inset 0px 2px 2px rgba(0, 0, 0, 0.2);
+}
+.grade-element :active {
+    background-color: #062f47;
+    -moz-box-shadow: 0px 1px 2px transparent, inset 0px 2px 2px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0px 1px 2px transparent, inset 0px 2px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 1px 2px transparent, inset 0px 2px 2px rgba(0, 0, 0, 0.2);
+}
+.element-option {
+    background-color: white;
+    color: black;
+}
+.grade-button {
+  transition: 0.2s;
+  background-color: #1396e2;
+  color: #fff;
+  width: 100%;
+  height: 43px;
+  margin: 5px 0;
+}
+.grade-button :hover {
+     background-color: #128dd4;
+}
