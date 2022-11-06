@@ -2,6 +2,7 @@ import folium
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
+import numpy as np
 from .models import Segment, Description
 from .forms import CreateUserForm
 from . import getroute
@@ -28,12 +29,23 @@ def login_page(request):
 
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            print('a')
             login(request, user)
             return redirect('/')
+
     return render(request, 'login.html')
 
-
+def main_map(request):
+    if request.method == 'GET':
+        figure = folium.Figure()
+        map = folium.Map(location=[56.8,60.6],
+                         zoom_start=12)
+        map.add_to(figure)
+        segments = Segment.objects.all()
+        for segment in segments:
+            draw_polyline_by_segment(segment, map)
+        figure.render()
+        context = {'map': figure}
+        return render(request, 'main-map.html', context)
 
 def showmap(request):
     return render(request, 'showmap.html')
@@ -77,6 +89,20 @@ def draw_polyline(route, map):
     folium.PolyLine(route['route'], weight=8, color='blue', opacity=0.6).add_to(map)
     folium.Marker(location=route['start_point'], icon=folium.Icon(icon='play', color='green')).add_to(map)
     folium.Marker(location=route['end_point'], icon=folium.Icon(icon='stop', color='red')).add_to(map)
+
+def draw_polyline_by_segment(segment, map):
+    path = getroute.load_path(segment.segment)
+    descriptions_by_segment = Description.objects.filter(segment=segment)
+    score = int(np.mean([description.score for description in descriptions_by_segment]))
+    color_dict = {
+        5 : 'green',
+        4 : 'blue',
+        3 : 'yellow',
+        2 : 'red',
+        1 : 'black'
+    }
+    color = color_dict[score]
+    folium.PolyLine(path, weight=5, color=color, opacity=0.6).add_to(map)
 
 
 def save_segment(path, user):
