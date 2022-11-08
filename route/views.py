@@ -45,6 +45,10 @@ def main_map(request):
             draw_polyline_by_segment(segment, map)
         figure.render()
         context = {'map': figure}
+        segment_list = []
+        for i, segment in zip(range(len(segments)), segments):
+            segment_list.append((i, segment.segment))
+        context['segments'] = segment_list
         return render(request, 'main-map.html', context)
 
 def showmap(request):

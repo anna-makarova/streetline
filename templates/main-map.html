@@ -14,5 +14,8 @@
         </script>
             {% endif %}
     </div>
+    {% for index, segment in segments %}
+        <p>{{ index }} {{ segment }}</p>
+    {% endfor %}
 </body>
 </html>

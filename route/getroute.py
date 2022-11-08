@@ -6,7 +6,7 @@ import json
 
 def get_route(pickup_lon, pickup_lat, dropoff_lon, dropoff_lat):
     loc = "{},{};{},{}".format(pickup_lon, pickup_lat, dropoff_lon, dropoff_lat)
-    url = "http://router.project-osrm.org/route/v1/driving/"
+    url = "http://router.project-osrm.org/route/v1/foot/"
     r = requests.get(url + loc) 
     if r.status_code != 200:
         return {}
