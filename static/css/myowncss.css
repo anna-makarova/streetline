@@ -1,4 +1,145 @@
+/*main*/
+.main {
+    z-index: 1;
+}
+/*HEADER*/
+
+.header {
+}
+.nav-item {
+    height: 25px;
+}
+.nav .navbar .navbar-light .navbar-expand-sm {
+    height: 60px;
+    background-color: white;
+}
+.navbar-light .navbar-nav .nav-link {
+    font-size: 20px;
+    color: #303131;
+    text-transform: uppercase;
+    position: relative;
+    border-top: 3px solid transparent;
+    -webkit-transition: all .8s ease-in-out;
+    -o-transition: all .8s ease-in-out;
+}
+.navbar-light .navbar-nav .nav-link:hover {
+    color: #A69B5D;
+    border-top: 3px solid #A69B5D;
+    transition: .8s all;
+}
+.offcanvas-end {
+    width: 250px;
+}
+/*MAP*/
+#map {position: absolute; top:0; bottom:0; right:0; left:0; z-index: -1;}
+
+/*INFO*/
+.info-wrapper {
+    display: block;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+.info-box {
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    height: 100vh;
+    width: inherit;
+    padding: 5px 10px 1px 10px;
+    top: -62px;
+    left: -13px;
+     scroll-behavior: smooth;
+}
+.info-box h2 {
+    font-size: 24px;
+    font-weight: lighter;
+    color: #5a5a5a;
+    font-family: 'Roboto', sans-serif;
+}
+.marks h1 {
+    font-size: 35pt;
+    color: brown;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    padding: 10px 1px 0px 10px
+}
+.info-box h4 {
+    font-size: 10pt;
+    font-weight: lighter;
+    color: #5a5a5a;
+    font-family: 'Roboto', sans-serif;
+}
+.author {
+    font-size: 12pt;
+    font-weight: normal;
+    color: #5a5a5a;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 5px;
+    margin-top: 15px;
+}
+.rating-area {
+	overflow: hidden;
+	width: max-content;
+	margin: 10px 0px 10px 0px;
+}
+.rating-area:not(:checked) > input {
+	display: none;
+}
+.rating-area:not(:checked) > label {
+	float: right;
+	width: 42px;
+	padding: 0;
+	cursor: pointer;
+	font-size: 40px;
+	line-height: 32px;
+	color: #5a5a5a;
+	text-shadow: 1px 1px #bbb;
+}
+.rating-area:not(:checked) > label:before {
+	content: '★';
+}
+.rating-area > input:checked ~ label {
+	color: gold;
+	text-shadow: 1px 1px #c60;
+}
+.rating-area:not(:checked) > label:hover,
+.rating-area:not(:checked) > label:hover ~ label {
+	color: gold;
+}
+.rating-area > input:checked + label:hover,
+.rating-area > input:checked + label:hover ~ label,
+.rating-area > input:checked ~ label:hover,
+.rating-area > input:checked ~ label:hover ~ label,
+.rating-area > label:hover ~ input:checked ~ label {
+	color: gold;
+	text-shadow: 1px 1px goldenrod;
+}
+.rate-area > label:active {
+	position: relative;
+}
+.rating-result {
+	width: max-content;
+	margin: 0px 0px 10px -15px
+}
+.rating-result span {
+	padding: 0;
+	font-size: 40px;
+	margin: 0px;
+	line-height: 1.7;
+	color: lightgrey;
+	text-shadow: 1px 1px #bbb;
+}
+.rating-result > span:before {
+	content: '★';
+}
+.rating-result > span.active {
+	color: gold;
+	text-shadow: 1px 1px #c60;
+}
+
+/*GRADE FORM*/
 .grade-wrapper {
+    display: none;
     position: relative;
     z-index: 1;
     width: 100%;

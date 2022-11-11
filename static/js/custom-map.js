@@ -248,7 +248,7 @@ function contactUsMap(){
 function createHomepageOSM(_latitude,_longitude){
     setMapHeight();
     if( document.getElementById('map') != null ){
-        $.getScript("assets/js/locations.js", function(){
+        $.getScript("static/js/locations.js", function(){
             var map = L.map('map', {
                 center: [_latitude,_longitude],
                 zoom: 14,

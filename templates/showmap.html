@@ -5,216 +5,233 @@
 <head>
   <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block static %}
-        <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
-        <link href="{% static 'fonts/font-awesome.css' %}" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" type="text/css">
-        <link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}" type="text/css">
-        <link rel="stylesheet" href="{% static 'css/jquery.slider.min.css' %}" type="text/css">
-        <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}" type="text/css">
-        <link rel="stylesheet" href="{% static 'css/osm.css' %}" type="text/css">
-        <link rel="stylesheet" href="{% static 'css/leaflet.css' %}" type="text/css">
-        <link rel="stylesheet" href="{% static 'css/MarkerCluster.css' %}" type="text/css">
-        <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
-    {% endblock %}
 
-  <!-- Load Leaflet from CDN -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-    crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
+        <link href=" {% static  'fonts/font-awesome.css'%}" rel="stylesheet" type="text/css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+{#        <link rel="stylesheet" href="{% static  'css/bootstrap-select.min.css' %}" type="text/css">#}
+{#        <link rel="stylesheet" href="{% static  'css/jquery.slider.min.css' %}" type="text/css">#}
+{#        <link rel="stylesheet" href="{% static  'css/owl.carousel.css' %}" type="text/css">#}
+        <link rel="stylesheet" href="{% static  'css/osm.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static  'css/leaflet.css' %}" type="text/css">
+{#        <link rel="stylesheet" href="{% static  'css/MarkerCluster.css' %}" type="text/css">#}
+{#        <link rel="stylesheet" href="{% static  'css/style.css' %}" type="text/css">#}
+        <link rel="stylesheet" href="{% static  'css/myowncss.css' %}" type="text/css">
+{#        <link rel="stylesheet" href="{% static 'fonts/font-awesome.css' %}">#}
 
-  <!-- Load Esri Leaflet from CDN -->
-  <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
-    integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="
-    crossorigin=""></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 
-  <!-- Load Esri Leaflet Geocoder from CDN -->
-  <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.css"
-    integrity="sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g=="
-    crossorigin="">
-  <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js"
-    integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA=="
-    crossorigin=""></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
-  <link rel="stylesheet" href="{% static 'fonts/font-awesome.css' %}">
 </head>
-<body class="page-homepage map-osm" id="page-top" data-spy="scroll" data-target=".navigation" data-offset="90">
-<!-- Wrapper -->
-<div class="wrapper">
-    <div class="navigation">
-        <div class="container">
-            <header class="navbar" id="top" role="banner">
-                <div class="navbar-header">
-                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <div class="navbar-brand nav" id="brand">
-                        <a href="index-google-map-fullscreen.html"><img src="assets/img/logo.png" alt="brand"></a>
+<body>
+    <style>
+        {##wrap-wrapper {height: max-content; position: relative;}#}
+        {##wrapper {height: 720px; z-index: -1;}#}
+        #map {position: absolute; top:0; bottom:0; right:0; left:0;}
+        {##inf {height: 100px; width:200px; z-index: 100; display: block; top: 10px;#}
+        {#    background-color: #4ac1f7}#}
+    </style>
+    <svg width="0" height="0" xmlns="http://www.w3.org/2000/svg">
+        <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" id="star">
+            <path d="M31.547 12a.848.848 0 00-.677-.577l-9.427-1.376-4.224-8.532a.847.847 0 00-1.516 0l-4.218 8.534-9.427 1.355a.847.847 0 00-.467 1.467l6.823 6.664-1.612 9.375a.847.847 0 001.23.893l8.428-4.434 8.432 4.432a.847.847 0 001.229-.894l-1.615-9.373 6.822-6.665a.845.845 0 00.214-.869z" />
+        </symbol>
+    </svg>
+
+    <div class="main">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="geo-location-wrapper">
+                            <span class="btn geo-location"><i class="fa fa-map-marker"></i><span class="text">Find My Position</span></span>
                     </div>
                 </div>
-            </header><!-- /.navbar -->
-        </div><!-- /.container -->
-    </div><!-- /.navigation -->
-
-    <div class="container">
-        <div class="geo-location-wrapper">
-            <span class="btn geo-location"><i class="fa fa-map-marker"></i><span class="text">Find My Position</span></span>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="grade-wrapper">
+                            <div class="grade-box">
+                                <form method= "post" role="form" id="form-map">
+                                    {% csrf_token %}
+                                    <h2>Оцените качество дороги</h2>
+                                     <div class="rating-area">
+                                        <input type="radio" id="star-5" name="rating" value="5">
+                                        <label for="star-5" title="Оценка «5»"></label>
+                                        <input type="radio" id="star-4" name="rating" value="4">
+                                        <label for="star-4" title="Оценка «4»"></label>
+                                        <input type="radio" id="star-3" name="rating" value="3">
+                                        <label for="star-3" title="Оценка «3»"></label>
+                                        <input type="radio" id="star-2" name="rating" value="2">
+                                        <label for="star-2" title="Оценка «2»"></label>
+                                        <input type="radio" id="star-1" name="rating" value="1">
+                                        <label for="star-1" title="Оценка «1»"></label>
+                                    </div>
+                                    <div>
+                                        <select name="score" class="grade-element">
+                                                    <option class="element-option" value="">Оценка</option>
+                                                    <option class="element-option" value="1">1</option>
+                                                    <option class="element-option" value="2">2</option>
+                                                    <option class="element-option" value="3">3</option>
+                                                    <option class="element-option" value="4">4</option>
+                                                    <option class="element-option" value="5">5</option>
+                                        </select>
+                                    </div><!-- /.form-group -->
+                                    <div>
+                                        <select name="type" class="grade-element">
+                                                    <option class="element-option" value="">Тип</option>
+                                                    <option class="element-option" value="0">Брусчатка</option>
+                                                    <option class="element-option" value="1">Ямы</option>
+                                                    <option class="element-option" value="2">Поребрики</option>
+                                                    <option class="element-option" value="3">Ливневка</option>
+                                        </select>
+                                    </div><!-- /.form-group -->
+                                    <div>
+                                        <input name="comment" type="text" class="grade-element" id="search-box-property-info" placeholder="Комментарий">
+                                    </div>
+                                    <div>
+                                        <button name="add_to_db_form" type="submit" class="grade-button">Отправить</button>
+                                    </div><!-- /.form-group -->
+                                </form><!-- /#form-map -->
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="info-wrapper">
+                        <div class="info-box">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="marks">
+                                        <h1>4</h1>
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="rating-result">
+                                        <span class="active"></span>
+                                        <span class="active"></span>
+                                        <span class="active"></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class = "info-header">
+                                      <h2>Отзывы</h2>
+                                    </div>
+                                    <div class="review">
+                                        <p class="author"> Somebody </p>
+                                        <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </h4>
+                                    </div>
+                                        <div class="review">
+                                        <p class="author"> Somebody </p>
+                                        <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </h4>
+                                    </div>
+                                    <div class="review">
+                                        <p class="author"> Somebody </p>
+                                        <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </h4>
+                                    </div>
+                                    <div class="review">
+                                        <p class="author"> Somebody </p>
+                                        <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Map -->
     <div id="map"></div>
-    <!-- end Map -->
 
-    <!-- Search Box -->
-{#    <div class="search-box-wrapper">#}
-{#        <div class="search-box-inner">#}
-{#            <div class="container">#}
-{#                <div class="row">#}
-{#                    <div class="col-md-3 col-sm-4">#}
-{#                        <div class="search-box map">#}
-{#                            <form role="form" id="form-map" class="form-map form-search">#}
-{#                                <h2>Оцените качество дороги</h2>#}
-{#                                <div class="form-group">#}
-{#                                    <select name="score">#}
-{#                                        <option value="">Оценка</option>#}
-{#                                        <option value="1">1</option>#}
-{#                                        <option value="2">2</option>#}
-{#                                        <option value="3">3</option>#}
-{#                                        <option value="4">4</option>#}
-{#                                        <option value="5">5</option>#}
-{#                                    </select>#}
-{#                                </div><!-- /.form-group -->#}
-{#                                <div class="form-group">#}
-{#                                    <select name="type">#}
-{#                                        <option value="">Тип</option>#}
-{#                                        <option value="1">Брусчатка</option>#}
-{#                                        <option value="2">Ямы</option>#}
-{#                                        <option value="3">Поребрики</option>#}
-{#                                        <option value="4">Ливневка</option>#}
-{#                                    </select>#}
-{#                                </div><!-- /.form-group -->#}
-{#                                <div class="form-group">#}
-{#                                    <input type="text" class="form-control" id="search-box-property-info" placeholder="Комментарий">#}
-{#                                </div>#}
-{#                                <div class="form-group">#}
-{#                                    <button type="submit" class="btn btn-default">Отправить</button>#}
-{#                                </div><!-- /.form-group -->#}
-{#                            </form><!-- /#form-map -->#}
-{#                        </div><!-- /.search-box.map -->#}
-{#                    </div><!-- /.col-md-3 -->#}
-{#                </div><!-- /.row -->#}
-{#            </div><!-- /.container -->#}
-{#        </div><!-- /.search-box-inner -->#}
-{#    </div>#}
-    <!-- end Search Box -->
+{#    <script>#}
+{#        var geojsonFeature = {#}
+{#            "type": "Feature",#}
+{#            "properties": {#}
+{#                "name": "Coors Field",#}
+{#                "amenity": "Baseball Stadium",#}
+{#                "popupContent": "This is where the Rockies play!"#}
+{#            },#}
+{#            "geometry": {#}
+{#                "type": "LineString",#}
+{#                "coordinates": [[60.58988, 56.81602], [60.60518, 56.81726], [60.60723, 56.81785], [60.61305, 56.81853], [60.6137, 56.81677], [60.61302, 56.8167], [60.61285, 56.81658]]#}
+{#            }#}
+{#        };#}
+{#        [60.595565, 56.82629], [60.600414, 56.826759], [60.601315, 56.824444], [60.602002, 56.822355], [60.607796, 56.822355], [60.610414, 56.815923]#}
+{#    </script>#}
+    <script>
+        var states = [{
+    "type": "Feature",
+    "properties": {"party": "Good"},
+    "geometry": {
+        "type": "LineString",
+        "coordinates": [
+            [60.58988, 56.81602], [60.60518, 56.81726],
+            [60.60723, 56.81785], [60.61305, 56.81853],
+            [60.6137, 56.81677], [60.61302, 56.8167],
+            [60.61285, 56.81658]
+        ]
+    }
+}, {
+    "type": "Feature",
+    "properties": {"party": "Bad"},
+    "geometry": {
+        "type": "LineString",
+        "coordinates": [
+            [60.595565, 56.82629], [60.600414, 56.826759],
+            [60.601315, 56.824444], [60.602002, 56.822355],
+            [60.607796, 56.82282], [60.610414, 56.815923]
+        ]
+    }
+}];
+    </script>
 
-    <!-- Page Footer -->
-    <footer id="page-footer">
-        <div class="inner">
-            <aside id="footer-main">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-3 col-sm-3">
-                            <article>
-                                <h3>About Us</h3>
-                                <p>Vel fermentum ipsum. Suspendisse quis molestie odio. Interdum et malesuada fames ac ante ipsum
-                                    primis in faucibus. Quisque aliquet a metus in aliquet. Praesent ut turpis posuere, commodo odio
-                                    id, ornare tortor
-                                </p>
-                                <hr>
-                                <a href="#" class="link-arrow">Read More</a>
-                            </article>
-                        </div><!-- /.col-sm-3 -->
-                        <div class="col-md-3 col-sm-3">
-                            <article>
-                            </article>
-                        </div><!-- /.col-sm-3 -->
-                        <div class="col-md-3 col-sm-3">
-                            <article>
-                                <h3>Contact</h3>
-                                <address>
-                                    <strong>Your Company</strong><br>
-                                    4877 Spruce Drive<br>
-                                    West Newton, PA 15089
-                                </address>
-                                +1 (734) 123-4567<br>
-                                <a href="#">hello@example.com</a>
-                            </article>
-                        </div><!-- /.col-sm-3 -->
-                        <div class="col-md-3 col-sm-3">
-                            <article>
-                            </article>
-                        </div><!-- /.col-sm-3 -->
-                    </div><!-- /.row -->
-                </div><!-- /.container -->
-            </aside><!-- /#footer-main -->
-            <aside id="footer-thumbnails" class="footer-thumbnails"></aside><!-- /#footer-thumbnails -->
-            <aside id="footer-copyright">
-                <div class="container">
-                    <span>Copyright © 2013. All Rights Reserved.</span>
-                    <span class="pull-right"><a href="#page-top" class="roll">Go to top</a></span>
-                </div>
-            </aside>
-        </div><!-- /.inner -->
-    </footer>
-    <!-- end Page Footer -->
-</div>
+    <script>
+      var map = L.map('map').setView([56.8,60.6], 12);
+      data={};
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+      var marker = L.marker([56.847213, 60.645398]).addTo(map);
 
-<div id="overlay"></div>
-
-<script type="text/javascript" src="{% static 'js/jquery-2.1.0.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/jquery-migrate-1.2.1.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/smoothscroll.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/bootstrap-select.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/jquery.validate.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/jquery.placeholder.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/icheck.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/jquery.vanillabox-0.1.5.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/retina-1.1.0.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/smoothscroll.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/jshashtable-2.1_src.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/jquery.numberformatter-1.2.3.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/tmpl.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/jquery.dependClass-0.1.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/draggable-0.1.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/jquery.slider.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/custom-map.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/custom.js' %}"></script>
-
-<script>
-  var map = L.map('map').setView([56.8,60.6], 12);
-  data={};
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(map);
-  var gcs = L.esri.Geocoding.geocodeService();
-  var count=0;
-  map.on('click', (e)=>{
-    count+=1;
-    gcs.reverse().latlng(e.latlng).run((err, res)=>{
-      if(err) return;
-      L.marker(res.latlng).addTo(map).bindPopup(res.address.Match_addr).openPopup();
-      k=count.toString()
-      data[k+'lat']=res.latlng['lat'];
-      data[k+'lon']=res.latlng['lng'];
-      if(count===2){
-        const baseurl="{% url 'showmap' %}";
-        const route_url=baseurl+data['1lat']+','+data['1lon']+','+data['2lat']+','+data['2lon'];
-        count=0;
-        window.location.replace(route_url);
+      function onEachFeature(feature, layer) {
+          // does this feature have a property named popupContent?
+          if (feature.properties && feature.properties.popupContent) {
+              layer.bindPopup(feature.properties.popupContent);
+          }
       }
-   });
-});
-</script>
+      L.geoJSON(states, {
+    style: function(feature) {
+        switch (feature.properties.party) {
+            case 'Bad': return {color: "#ff0000"};
+            case 'Good':   return {color: "#0000ff"};
+        }
+    }
+}).addTo(map);
+    </script>
+
+    <script>
+        var popup = L.popup();
+
+        function onMapClick(e) {
+            popup
+                .setLatLng(e.latlng)
+                .setContent("You clicked the map at " + e.latlng.toString())
+                .openOn(map);
+        }
+        map.on('click', onMapClick);
+    </script>
+    <script>
+        function onFeatureClick(e) {
+
+        }
+
+
+    </script>
+
+
 </body>
 </html>
