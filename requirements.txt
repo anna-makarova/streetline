@@ -4,3 +4,5 @@ Jinja2==3.0.1
 pbr==5.6.0
 polyline==1.4.0
 requests==2.25.1
+networkx==2.8.6
+osmnx==1.2.2

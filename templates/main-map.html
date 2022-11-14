@@ -14,8 +14,11 @@
         </script>
             {% endif %}
     </div>
-    {% for index, segment in segments %}
-        <p>{{ index }} {{ segment }}</p>
+    {% for index, segment, score, description in segments %}
+        <p>{{ index }} {{ segment }} {{ score }}</p>
+            {% for description_score, description_type, description_comment in description %}
+                <p> {{ description_score }} {{ description_type }} {{ description_comment }}</p>
+            {% endfor %}
     {% endfor %}
 </body>
 </html>
