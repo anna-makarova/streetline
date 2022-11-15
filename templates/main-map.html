@@ -3,14 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Главная</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
-     integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14="
-     crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
-     integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg="
-     crossorigin=""></script>
     {{map.header.render|safe}}
-
 </head>
 <body>
     <div id="map">
@@ -21,29 +14,11 @@
         </script>
             {% endif %}
     </div>
-    {% for index, segment in segments %}s
-        <p>{{ index }}</p>
-        <p>{{ segment }}</p>
-        <script>
-        var geojsonFeature = {
-            "type": "Feature",
-            "properties": {
-                "index": {{ index }},
-                "name": "Coors Field",
-                "amenity": "Baseball Stadium",
-                "popupContent": "This is where the Rockies play!"
-            },
-            "geometry": {
-                "type": "LineString",
-                "coordinates": {{ segment }}
-            }
-        };
-    </script>
-{#        <p>{{ index }} {{ segment }}</p>#}
+    {% for index, segment, score, description in segments %}
+        <p>{{ index }} {{ segment }} {{ score }}</p>
+            {% for description_score, description_type, description_comment in description %}
+                <p> {{ description_score }} {{ description_type }} {{ description_comment }}</p>
+            {% endfor %}
     {% endfor %}
-
-<script>
-    var marker = L.marker([51.5, -0.09]).addTo(map);
-</script>
 </body>
 </html>

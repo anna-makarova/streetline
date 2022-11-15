@@ -2,11 +2,20 @@ import folium
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
+import osmnx as ox
+import networkx as nx
 import numpy as np
 from .models import Segment, Description
 from .forms import CreateUserForm
 from . import getroute
+import json
 
+def load_graphs():
+    map_graph = ox.graph_from_place('Yekaterinburg, Russia', 'walk')
+    navigation_graph = map_graph.copy()
+    return navigation_graph, map_graph
+
+navigation_graph, map_graph = load_graphs()
 
 def register_page(request):
     if request.method == 'GET':
@@ -18,9 +27,10 @@ def register_page(request):
         if form.is_valid():
             form.save()
             user = form.cleaned_data.get('username')
-
-        return redirect('login')
-
+            return redirect('login')
+        else:
+            context = {'form': form}
+            return render(request, 'register.html', context)
 
 def login_page(request):
     if request.method == 'POST':
@@ -36,81 +46,73 @@ def login_page(request):
 
 def main_map(request):
     if request.method == 'GET':
-        figure = folium.Figure()
-        map = folium.Map(location=[56.8,60.6],
-                         zoom_start=12)
-        map.add_to(figure)
-        segments = Segment.objects.all()
-        for segment in segments:
-            draw_polyline_by_segment(segment, map)
-        figure.render()
-        context = {'map': figure}
         segment_list = []
+        segments = Segment.objects.all()
         for i, segment in zip(range(len(segments)), segments):
-            segment_list.append((i, segment.segment))
-        context['segments'] = segment_list
+            relevant_descriptions = Description.objects.filter(segment=segment)[:10]
+            segment_list.append((i, segment.segment, segment.mean_score, \
+                                 [[description.score, description.type, description.comment] for description in relevant_descriptions]))
+        context = {'segments' : segment_list}
         return render(request, 'main-map.html', context)
 
 def showmap(request):
     return render(request, 'showmap.html')
 
+def test_page(request):
+    return render(request, 'test.html')
+
 
 def showroute(request, lat_start, long_start, lat_stop, long_stop):
+    global navigation_graph, map_graph
     if request.method == 'GET':
-        figure = folium.Figure()
-
         lat_start, long_start, lat_stop, long_stop = float(lat_start), float(long_start), float(lat_stop), float(long_stop)
-        route = getroute.get_route(long_start, lat_start, long_stop, lat_stop)
-        map = folium.Map(location=[(route['start_point'][0]),
-                             (route['start_point'][1])],
-                   zoom_start=15)
-        map.add_to(figure)
-        draw_polyline(route, map)
-        figure.render()
-        context = {'map': figure}
+        _, coordinates = getroute.get_route(map_graph, long_start, lat_start, long_stop, lat_stop)
+        context = {'coordinates': coordinates}
         return render(request, 'showroute.html', context)
 
     elif request.method == 'POST' and 'add_to_db_form' in request.POST:
-        score = int(request.POST.get('score'))
+        score = int(request.POST.get('score')) # достаем данные из формы и приводим к нужным типам
         type_dict = {
-                "0": 'Брусчатка',
-                "1": 'Ямы',
-                "2": 'Поребрики',
-                "3": 'Ливневка'
+            "0": 'Брусчатка',
+            "1": 'Ямы',
+            "2": 'Поребрики',
+            "3": 'Ливневка'
         }
-
+        score_coeffs = {
+            5: 1,
+            1: 7.5,
+            2: 3,
+            3: 1.875,
+            4: 1.2,
+        }
         type = type_dict[request.POST.get('type')]
         comment = request.POST.get('comment')
-        json_path = getroute.get_and_save_path(lat_start, long_start, lat_stop, long_stop)
+
+        route, coordinates = getroute.get_route(map_graph, long_start, lat_start, long_stop, lat_stop)
+        json_path = json.dumps(coordinates)
         user = request.user
-        segment = save_segment(json_path, user)
+        segment = save_segment(json_path, user, score)
         save_description(segment, user, score, type, comment)
+        getroute.add_weights_from_segment(navigation_graph, route, score, score_coeffs)
         return redirect('/')
 
+def navigation_page(request):
+    global navigation_graph
+    if request.method == 'GET':
+        context = {}
+        return render(request, 'navigation.html', context)
 
+    elif request.method == 'POST':
+        start_lat = request.POST.get('start_lat')
+        start_lon = request.POST.get('start_lon')
+        end_lat = request.POST.get('end_lat')
+        end_lon = request.POST.get('end_lon')
+        _, сoordinates  = getroute.get_route(navigation_graph, start_lat, start_lon, end_lat, end_lon)
+        context = {'сoordinates': сoordinates}
+        return render(request, 'navigation.html', context)
 
-def draw_polyline(route, map):
-    folium.PolyLine(route['route'], weight=8, color='blue', opacity=0.6).add_to(map)
-    folium.Marker(location=route['start_point'], icon=folium.Icon(icon='play', color='green')).add_to(map)
-    folium.Marker(location=route['end_point'], icon=folium.Icon(icon='stop', color='red')).add_to(map)
-
-def draw_polyline_by_segment(segment, map):
-    path = getroute.load_path(segment.segment)
-    descriptions_by_segment = Description.objects.filter(segment=segment)
-    score = int(np.mean([description.score for description in descriptions_by_segment]))
-    color_dict = {
-        5 : 'green',
-        4 : 'blue',
-        3 : 'yellow',
-        2 : 'red',
-        1 : 'black'
-    }
-    color = color_dict[score]
-    folium.PolyLine(path, weight=5, color=color, opacity=0.6).add_to(map)
-
-
-def save_segment(path, user):
-    segment_object = Segment(segment=path, creator=user)
+def save_segment(path, user, score):
+    segment_object = Segment(segment=path, creator=user, mean_score=score)
     segment_object.save()
     return segment_object
 

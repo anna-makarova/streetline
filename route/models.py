@@ -10,6 +10,7 @@ class Marker(models.Model):
 
 class Segment(models.Model):
     segment = models.TextField()
+    mean_score = models.IntegerField(default=3)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
 
 

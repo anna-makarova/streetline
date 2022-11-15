@@ -2,35 +2,22 @@ import requests
 import json
 import polyline
 import folium
-import json
+import osmnx as ox
+import networkx as nx
 
-def get_route(pickup_lon, pickup_lat, dropoff_lon, dropoff_lat):
-    loc = "{},{};{},{}".format(pickup_lon, pickup_lat, dropoff_lon, dropoff_lat)
-    url = "http://router.project-osrm.org/route/v1/foot/"
-    r = requests.get(url + loc) 
-    if r.status_code != 200:
-        return {}
-    res = r.json()   
-    routes = polyline.decode(res['routes'][0]['geometry'])
-    start_point = [res['waypoints'][0]['location'][1], res['waypoints'][0]['location'][0]]
-    end_point = [res['waypoints'][1]['location'][1], res['waypoints'][1]['location'][0]]
-    distance = res['routes'][0]['distance']
-    
-    out = {
-        'route' : routes,
-        'start_point': start_point,
-        'end_point': end_point,
-        'distance': distance
-    }
-
-    return out
+def get_route(graph, start_lat, start_lon, end_lat, end_lon):
+    start_lat, start_lon, end_lat, end_lon = float(start_lat), float(start_lon), float(end_lat), float(end_lon)
+    start_node = ox.nearest_nodes(graph, X=start_lat, Y=start_lon)
+    end_node = ox.nearest_nodes(graph, X=end_lat, Y=end_lon)
+    route = nx.shortest_path(graph, start_node, end_node, weight='length')
+    nodes = graph.nodes()
+    coordinates = [[nodes[node]['x'], nodes[node]['y']] for node in route]
+    print(route)
+    print(coordinates)
+    return route, coordinates
 
 
-def get_and_save_path(lat_start, lon_start, lat_stop, lon_stop):
-    res = requests.get(f"http://router.project-osrm.org/route/v1/driving/{lon_start},{lat_start};{lon_stop},{lat_stop}")
-    path = polyline.decode(res.json()['routes'][0]['geometry'])
-    return json.dumps(path)
-
-
-def load_path(json_path):
-    return json.loads(json_path)
+def add_weights_from_segment(graph, route, score, score_coeffs):
+    pairs = [(route[i - 1], route[i]) for i in range(1, len(route))]
+    for pair in pairs:
+        graph[pair[0]][pair[1]][0]['length'] = graph[pair[0]][pair[1]][0]['length'] * score_coeffs[score]
