@@ -1,24 +1,222 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Главная</title>
-    {{map.header.render|safe}}
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
+    <link href=" {% static  'fonts/font-awesome.css'%}" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static  'css/osm.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static  'css/MarkerCluster.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static  'css/myowncss.css' %}" type="text/css">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
+    integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="
+    crossorigin=""></script>
+
+  <!-- Load Esri Leaflet Geocoder from CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.css"
+    integrity="sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g=="
+    crossorigin="">
+  <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js"
+    integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA=="
+    crossorigin=""></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 </head>
 <body>
-    <div id="map">
-        {% if map %}
-        {{ map.html.render|safe }}
-        <script>
-            {{ map.script.render|safe }}
-        </script>
-            {% endif %}
+    <div class="main">
+        <div class="wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="geo-location-wrapper">
+                                <span class="btn geo-location"><i class="fa fa-map-marker"></i><span class="text">Find My Position</span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="info-wrapper" id="info-wrapper">
+                            <div class="info-box">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="marks">
+                                            <h1 id="marks"></h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="rating-result">
+                                            <span id="1" ></span>
+                                            <span id="2" ></span>
+                                            <span id="3" ></span>
+                                            <span id="4" ></span>
+                                            <span id="5" ></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class = "info-header">
+                                          <h2>Отзывы</h2>
+                                        </div>
+                                        <div class="review">
+                                            <p class="author" id="author" >Somebody </p>
+                                            <h4 class="author" id="author-score" ></h4>
+                                            <h4 class="author" id="types"></h4>
+                                            <h4 class="author" id="descriptions"></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class = "col-md-12">
+                                        <button class="add-info" id="add-info"> Добавить информацию</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="icon">
+                <img id="segment" class="segment" src="{% static "img/segment-img.png"%}" title="Текст при наведении курсора"/>
+                <img id="route" class="route" src="{% static "img/route-img.png"%}"  title="Текст при наведении курсора" />
+            </div>
+        </div>
     </div>
-    {% for index, segment, score, description in segments %}
-        <p>{{ index }} {{ segment }} {{ score }}</p>
-            {% for description_score, description_type, description_comment in description %}
-                <p> {{ description_score }} {{ description_type }} {{ description_comment }}</p>
+    <div id="map">
+
+    </div>
+
+    <script>
+            let states = [
+                {% for index, segment, score, description in segments %}
+                {
+                    "type": "Feature",
+                    "index": {{ index }},
+                    "properties":{
+                            "mean_score":"{{ score }}",
+                            "test":
+                                {% for description_score, description_type, description_comment in description %}
+                                    {
+                                        "score": "{{ description_score }}",
+                                        "type": "{{ description_type }}",
+                                        "description": "{{ description_comment }}",
+                                    },
+                                {% endfor %}
+                    },
+                    "geometry": {
+                            "type": "LineString",
+                            "coordinates":{{ segment }}
+                    }
+                },
             {% endfor %}
-    {% endfor %}
+            ];
+    </script>
+
+    <script>
+      var map = L.map('map').setView([56.8,60.6], 13);
+      map.zoomControl.setPosition('topright');
+      data={};
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: "&copy; <a href=\"https://osm.org/copyright\">OpenStreetMap</a> contributors"
+      }).addTo(map);
+      var marker = L.marker([56.847213, 60.645398]).addTo(map);
+
+    </script>
+
+
+    <script>
+      var marks = document.getElementById('marks');
+      var author = document.getElementById('author');
+      var authorScore = document.getElementById('author-score');
+      var type = document.getElementById('types');
+      var descriptions = document.getElementById('descriptions');
+      var segment = 0;
+
+      function onEachFeature(feature, layer) {
+          layer.on('click', function (e) {
+              document.getElementById('info-wrapper').style.display = 'block';
+              marks.innerText = e.target.feature.properties.mean_score;
+              {#author.innerText = e.target.feature.properties.author;#}
+              authorScore.innerText = e.target.feature.properties.test.score;
+              type.innerText = e.target.feature.properties.test.type;
+              descriptions.innerText = e.target.feature.properties.test.description;
+              segment = e.target.feature.geometry.coordinates;
+          });
+      }
+
+      L.geoJSON(states, {
+        style: function(feature) {
+            switch (feature.properties.mean_score) {
+                case '1':
+                    return {color: "#460A0A", weight: 7};
+                case '2':
+                    return {color: "#F32A2A", weight: 7};
+                case '3':
+                    return {color: "#FF8F00", weight: 7};
+                case '4':
+                    return {color: "#FFD800", weight: 7};
+                case '5':
+                    return {color: "#5FE242", weight: 7};
+            }
+        },
+        onEachFeature: onEachFeature
+      }).addTo(map);
+    </script>
+
+    <script>
+        var infoButton = document.getElementById('add-info');
+        infoButton.onclick = function (e) {
+            const baseurl="{% url 'showmap' %}";
+            const route_url=baseurl+[segment[0][1]]+','+[segment[0][0]]+','+[segment[segment.length - 1][1]]+','+[segment[segment.length - 1][0]];
+            window.location.replace(route_url);
+        }
+    </script>
+    <script>
+        var segmentButton = document.getElementById('segment');
+        var routeButton = document.getElementById('route')
+        var gcs = L.esri.Geocoding.geocodeService();
+        var count=0;
+        var start_lat = 0;
+        var start_lon = 0;
+        var end_lat = 0;
+        var end_lon = 0;
+
+        segmentButton.addEventListener("click", getRouteCoordinates);
+        routeButton.addEventListener("click", getRouteCoordinates);
+
+         function getRouteCoordinates () {
+            map.on('click', function (e){
+                count += 1;
+                console.log(e);
+                gcs.reverse().latlng(e.latlng).run((err, res)=>{
+                    if(err) return;
+                    L.marker(res.latlng).addTo(map).bindPopup(res.address.Match_addr).openPopup();
+                    if (count === 1){
+                         start_lat =res.latlng['lat'];
+                         start_lon =res.latlng['lng'];
+                    }
+                    else if(count===2){
+                        end_lat =res.latlng['lat'];
+                        end_lon =res.latlng['lng'];
+                        const baseurl="{% url 'showmap' %}";
+                        const route_url=baseurl+start_lat+','+start_lon+','+end_lat+','+end_lon;
+                        count=0;
+                        window.location.replace(route_url);
+                    }
+                });
+            });
+         }
+
+
+    </script>
 </body>
 </html>

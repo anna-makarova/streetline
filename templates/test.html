@@ -5,6 +5,66 @@
     <title>Тестовая, убрать при деплое</title>
 </head>
 <body>
+<div class="row">
+                <div class="col-md-3">
+                    <div class="grade-wrapper" id="grade-wrapper">
+                            <div class="grade-box">
+                                <form method= "post" role="form" id="form-map">
+                                    {% csrf_token %}
+                                    <h2>Оцените качество дороги</h2>
+                                     <div class="rating-area">
+                                        <input type="radio" id="star-5" name="rating" value="5">
+                                        <label for="star-5" title="Оценка «5»"></label>
+                                        <input type="radio" id="star-4" name="rating" value="4">
+                                        <label for="star-4" title="Оценка «4»"></label>
+                                        <input type="radio" id="star-3" name="rating" value="3">
+                                        <label for="star-3" title="Оценка «3»"></label>
+                                        <input type="radio" id="star-2" name="rating" value="2">
+                                        <label for="star-2" title="Оценка «2»"></label>
+                                        <input type="radio" id="star-1" name="rating" value="1">
+                                        <label for="star-1" title="Оценка «1»"></label>
+                                    </div>
+                                    <div>
+                                        <select name="score" class="grade-element">
+                                                    <option class="element-option" value="">Оценка</option>
+                                                    <option class="element-option" value="1">1</option>
+                                                    <option class="element-option" value="2">2</option>
+                                                    <option class="element-option" value="3">3</option>
+                                                    <option class="element-option" value="4">4</option>
+                                                    <option class="element-option" value="5">5</option>
+                                        </select>
+                                    </div><!-- /.form-group -->
+                                    <div>
+                                        <select name="type" class="grade-element">
+                                                    <option class="element-option" value="">Тип</option>
+                                                    <option class="element-option" value="0">Брусчатка</option>
+                                                    <option class="element-option" value="1">Ямы</option>
+                                                    <option class="element-option" value="2">Поребрики</option>
+                                                    <option class="element-option" value="3">Ливневка</option>
+                                        </select>
+                                    </div><!-- /.form-group -->
+                                    <div>
+                                        <input name="comment" type="text" class="grade-element" id="search-box-property-info" placeholder="Комментарий">
+                                    </div>
+                                    <div>
+                                        <button name="add_to_db_form" type="submit" class="grade-button">Отправить</button>
+                                    </div><!-- /.form-group -->
+                                </form><!-- /#form-map -->
+                            </div>
+                    </div>
+                </div>
+            </div>
+<script>
+        var popup = L.popup();
 
+        function onMapClick(e) {
+
+            popup
+                .setLatLng(e.latlng)
+                .setContent("You clicked the map at " + e.latlng.toString())
+                .openOn(map);
+        }
+        map.on('click', onMapClick);
+    </script>
 </body>
 </html>

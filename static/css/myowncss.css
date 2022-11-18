@@ -2,6 +2,7 @@
 .main {
     z-index: 1;
 }
+
 /*HEADER*/
 
 .header {
@@ -33,9 +34,30 @@
 /*MAP*/
 #map {position: absolute; top:0; bottom:0; right:0; left:0; z-index: -1;}
 
+.icon {
+    position: relative;
+
+}
+.segment {
+    background: white;
+    width: 50px;
+    margin-top: 20px;
+    position: absolute;
+    right: 10px;
+    top: 80px;
+}
+.route {
+    background: white;
+    margin-top: 20px;
+    width: 50px;
+    position: absolute;
+    right: 10px;
+    top: 170px;
+}
+
 /*INFO*/
 .info-wrapper {
-    display: block;
+    display: none;
     position: relative;
     z-index: 1;
     width: 100%;
@@ -119,7 +141,9 @@
 }
 .rating-result {
 	width: max-content;
-	margin: 0px 0px 10px -15px
+	margin: 0px 0px 10px -15px;
+    display: flex;
+    flex-direction: row-reverse;
 }
 .rating-result span {
 	padding: 0;
@@ -132,14 +156,14 @@
 .rating-result > span:before {
 	content: '★';
 }
-.rating-result > span.active {
+.span:active ~ span{
 	color: gold;
 	text-shadow: 1px 1px #c60;
 }
 
 /*GRADE FORM*/
 .grade-wrapper {
-    display: none;
+    display: block;
     position: relative;
     z-index: 1;
     width: 100%;

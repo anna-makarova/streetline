@@ -52,7 +52,7 @@ def main_map(request):
             relevant_descriptions = Description.objects.filter(segment=segment)[:10]
             segment_list.append((i, segment.segment, segment.mean_score, \
                                  [[description.score, description.type, description.comment] for description in relevant_descriptions]))
-        context = {'segments' : segment_list}
+        context = {'segments': segment_list}
         return render(request, 'main-map.html', context)
 
 def showmap(request):
