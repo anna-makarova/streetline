@@ -95,6 +95,7 @@
 
     </div>
 
+<!--получение данных о сегменте с бэка-->
     <script>
             let states = [
                 {% for index, segment, score, description in segments %}
@@ -121,7 +122,7 @@
             {% endfor %}
             ];
     </script>
-
+<!--отрисовка базовой карты-->
     <script>
       var map = L.map('map').setView([56.8,60.6], 13);
       map.zoomControl.setPosition('topright');
@@ -129,11 +130,9 @@
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: "&copy; <a href=\"https://osm.org/copyright\">OpenStreetMap</a> contributors"
       }).addTo(map);
-      var marker = L.marker([56.847213, 60.645398]).addTo(map);
-
     </script>
 
-
+<!--отрисовка сегментов-->
     <script>
       var marks = document.getElementById('marks');
       var author = document.getElementById('author');
@@ -146,7 +145,7 @@
           layer.on('click', function (e) {
               document.getElementById('info-wrapper').style.display = 'block';
               marks.innerText = e.target.feature.properties.mean_score;
-              {#author.innerText = e.target.feature.properties.author;#}
+              author.innerText = e.target.feature.properties.test.author;
               authorScore.innerText = e.target.feature.properties.test.score;
               type.innerText = e.target.feature.properties.test.type;
               descriptions.innerText = e.target.feature.properties.test.description;
@@ -173,6 +172,7 @@
       }).addTo(map);
     </script>
 
+<!--переход на showroute на добавление информации о существующем участке-->
     <script>
         var infoButton = document.getElementById('add-info');
         infoButton.onclick = function (e) {
@@ -181,6 +181,7 @@
             window.location.replace(route_url);
         }
     </script>
+    <!--переход на showroute и навигацию по новым двум точкам-->
     <script>
         var segmentButton = document.getElementById('segment');
         var routeButton = document.getElementById('route')
@@ -209,7 +210,7 @@
                         end_lat =res.latlng['lat'];
                         end_lon =res.latlng['lng'];
                         const baseurl="{% url 'main' %}";
-                        const route_url=baseurl+ 'segment/ + 'start_lat+','+start_lon+','+end_lat+','+end_lon;
+                        const route_url=baseurl+ 'segment/' + start_lat + ',' + start_lon + ',' + end_lat + ',' + end_lon;
                         count=0;
                         window.location.replace(route_url);
                     }

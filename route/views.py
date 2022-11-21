@@ -88,7 +88,9 @@ def showroute(request, lat_start, long_start, lat_stop, long_stop):
         route, coordinates = getroute.get_route(map_graph, long_start, lat_start, long_stop, lat_stop)
         json_path = json.dumps(coordinates)
         user = request.user
-        segment = Segment.objects.filter(segment=json_path)[0]
+        try:
+            segment = Segment.objects.filter(segment=json_path)[0]
+        except:pass
         if segment:
             previous_scores = [description.score for description in Description.objects.filter(segment=segment)[:10]]
             segment.mean_score = getroute.update_mean(navigation_graph, route, segment, score, score_coeffs, previous_scores)
