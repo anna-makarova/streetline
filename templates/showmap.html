@@ -157,7 +157,7 @@
       data[k+'lat']=res.latlng['lat'];
       data[k+'lon']=res.latlng['lng'];
       if(count===2){
-        const baseurl="{% url 'showmap' %}";
+        const baseurl="";
         const route_url=baseurl+data['1lat']+','+data['1lon']+','+data['2lat']+','+data['2lon'];
         count=0;
         window.location.replace(route_url);

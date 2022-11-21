@@ -15,7 +15,8 @@ def load_graphs():
     navigation_graph = map_graph.copy()
     return navigation_graph, map_graph
 
-navigation_graph, map_graph = load_graphs()
+#navigation_graph, map_graph = load_graphs()
+
 
 def register_page(request):
     if request.method == 'GET':
@@ -55,9 +56,6 @@ def main_map(request):
         context = {'segments': segment_list}
         return render(request, 'main-map.html', context)
 
-def showmap(request):
-    return render(request, 'showmap.html')
-
 def test_page(request):
     return render(request, 'test.html')
 
@@ -65,7 +63,6 @@ def test_page(request):
 def showroute(request, lat_start, long_start, lat_stop, long_stop):
     global navigation_graph, map_graph
     if request.method == 'GET':
-        lat_start, long_start, lat_stop, long_stop = float(lat_start), float(long_start), float(lat_stop), float(long_stop)
         _, coordinates = getroute.get_route(map_graph, long_start, lat_start, long_stop, lat_stop)
         context = {'coordinates': coordinates}
         return render(request, 'showroute.html', context)
@@ -91,24 +88,23 @@ def showroute(request, lat_start, long_start, lat_stop, long_stop):
         route, coordinates = getroute.get_route(map_graph, long_start, lat_start, long_stop, lat_stop)
         json_path = json.dumps(coordinates)
         user = request.user
-        segment = save_segment(json_path, user, score)
-        save_description(segment, user, score, type, comment)
-        getroute.add_weights_from_segment(navigation_graph, route, score, score_coeffs)
+        segment = Segment.objects.filter(segment=json_path)[0]
+        if segment:
+            previous_scores = [description.score for description in Description.objects.filter(segment=segment)[:10]]
+            segment.mean_score = getroute.update_mean(navigation_graph, route, segment, score, score_coeffs, previous_scores)
+            segment.save()
+            save_description(segment, user, score, type, comment)
+        else:
+            segment = save_segment(json_path, user, score)
+            save_description(segment, user, score, type, comment)
+            getroute.add_weights_from_segment(navigation_graph, route, score, score_coeffs)
         return redirect('/')
 
-def navigation_page(request):
+def navigation_page(request, lat_start, long_start, lat_stop, long_stop):
     global navigation_graph
     if request.method == 'GET':
-        context = {}
-        return render(request, 'navigation.html', context)
-
-    elif request.method == 'POST':
-        start_lat = request.POST.get('start_lat')
-        start_lon = request.POST.get('start_lon')
-        end_lat = request.POST.get('end_lat')
-        end_lon = request.POST.get('end_lon')
-        _, сoordinates  = getroute.get_route(navigation_graph, start_lat, start_lon, end_lat, end_lon)
-        context = {'сoordinates': сoordinates}
+        _, coordinates = getroute.get_route(navigation_graph, long_start, lat_start, long_stop, lat_stop)
+        context = {'coordinates': coordinates}
         return render(request, 'navigation.html', context)
 
 def save_segment(path, user, score):
@@ -120,3 +116,9 @@ def save_segment(path, user, score):
 def save_description(segment, user, score, type, comment):
     description_object = Description(segment=segment, creator=user, score=score, type=type, comment=comment)
     description_object.save()
+
+
+
+# API
+
+

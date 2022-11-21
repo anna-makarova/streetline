@@ -175,7 +175,7 @@
     <script>
         var infoButton = document.getElementById('add-info');
         infoButton.onclick = function (e) {
-            const baseurl="{% url 'showmap' %}";
+            const baseurl="{% url 'main' %}";
             const route_url=baseurl+[segment[0][1]]+','+[segment[0][0]]+','+[segment[segment.length - 1][1]]+','+[segment[segment.length - 1][0]];
             window.location.replace(route_url);
         }
@@ -191,7 +191,7 @@
         var end_lon = 0;
 
         segmentButton.addEventListener("click", getRouteCoordinates);
-        routeButton.addEventListener("click", getRouteCoordinates);
+        routeButton.addEventListener("click", getRouteNavigationCoordinates);
 
          function getRouteCoordinates () {
             map.on('click', function (e){
@@ -207,8 +207,31 @@
                     else if(count===2){
                         end_lat =res.latlng['lat'];
                         end_lon =res.latlng['lng'];
-                        const baseurl="{% url 'showmap' %}";
+                        const baseurl="{% url 'main' %}";
                         const route_url=baseurl+start_lat+','+start_lon+','+end_lat+','+end_lon;
+                        count=0;
+                        window.location.replace(route_url);
+                    }
+                });
+            });
+         }
+
+         function getRouteNavigationCoordinates () {
+            map.on('click', function (e){
+                count += 1;
+                console.log(e);
+                gcs.reverse().latlng(e.latlng).run((err, res)=>{
+                    if(err) return;
+                    L.marker(res.latlng).addTo(map).bindPopup(res.address.Match_addr).openPopup();
+                    if (count === 1){
+                         start_lat =res.latlng['lat'];
+                         start_lon =res.latlng['lng'];
+                    }
+                    else if(count===2){
+                        end_lat =res.latlng['lat'];
+                        end_lon =res.latlng['lng'];
+                        const baseurl="{% url 'main' %}";
+                        const route_url=baseurl + 'navigation/' + start_lat + ','+ start_lon +','+ end_lat+','+end_lon;
                         count=0;
                         window.location.replace(route_url);
                     }
