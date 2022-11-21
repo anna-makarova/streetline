@@ -90,13 +90,11 @@ def showroute(request, lat_start, long_start, lat_stop, long_stop):
         user = request.user
         try:
             segment = Segment.objects.filter(segment=json_path)[0]
-        except:pass
-        if segment:
             previous_scores = [description.score for description in Description.objects.filter(segment=segment)[:10]]
             segment.mean_score = getroute.update_mean(navigation_graph, route, segment, score, score_coeffs, previous_scores)
             segment.save()
             save_description(segment, user, score, type, comment)
-        else:
+        except:
             segment = save_segment(json_path, user, score)
             save_description(segment, user, score, type, comment)
             getroute.add_weights_from_segment(navigation_graph, route, score, score_coeffs)
