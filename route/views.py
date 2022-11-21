@@ -15,7 +15,7 @@ def load_graphs():
     navigation_graph = map_graph.copy()
     return navigation_graph, map_graph
 
-#navigation_graph, map_graph = load_graphs()
+navigation_graph, map_graph = load_graphs()
 
 
 def register_page(request):
@@ -52,7 +52,7 @@ def main_map(request):
         for i, segment in zip(range(len(segments)), segments):
             relevant_descriptions = Description.objects.filter(segment=segment)[:10]
             segment_list.append((i, segment.segment, segment.mean_score, \
-                                 [[description.score, description.type, description.comment] for description in relevant_descriptions]))
+                                 [[description.score, description.type, description.comment, description.creator] for description in relevant_descriptions]))
         context = {'segments': segment_list}
         return render(request, 'main-map.html', context)
 

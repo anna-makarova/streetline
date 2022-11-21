@@ -104,11 +104,12 @@
                     "properties":{
                             "mean_score":"{{ score }}",
                             "test":
-                                {% for description_score, description_type, description_comment in description %}
+                                {% for description_score, description_type, description_comment, description_user in description %}
                                     {
                                         "score": "{{ description_score }}",
                                         "type": "{{ description_type }}",
                                         "description": "{{ description_comment }}",
+                                        "author": "{{ description_user }}",
                                     },
                                 {% endfor %}
                     },
@@ -176,7 +177,7 @@
         var infoButton = document.getElementById('add-info');
         infoButton.onclick = function (e) {
             const baseurl="{% url 'main' %}";
-            const route_url=baseurl+[segment[0][1]]+','+[segment[0][0]]+','+[segment[segment.length - 1][1]]+','+[segment[segment.length - 1][0]];
+            const route_url=baseurl + 'segment/' + [segment[0][1]]+','+[segment[0][0]]+','+[segment[segment.length - 1][1]]+','+[segment[segment.length - 1][0]];
             window.location.replace(route_url);
         }
     </script>
@@ -208,7 +209,7 @@
                         end_lat =res.latlng['lat'];
                         end_lon =res.latlng['lng'];
                         const baseurl="{% url 'main' %}";
-                        const route_url=baseurl+start_lat+','+start_lon+','+end_lat+','+end_lon;
+                        const route_url=baseurl+ 'segment/ + 'start_lat+','+start_lon+','+end_lat+','+end_lon;
                         count=0;
                         window.location.replace(route_url);
                     }
