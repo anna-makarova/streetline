@@ -67,7 +67,7 @@
                                         <div class = "info-header">
                                           <h2>Отзывы</h2>
                                         </div>
-                                        <div class="review">
+                                        <div class="review" id="revw">
                                             <p class="author" id="author" >Somebody </p>
                                             <h4 class="author" id="author-score" ></h4>
                                             <h4 class="author" id="types"></h4>
@@ -104,15 +104,16 @@
                     "index": {{ index }},
                     "properties":{
                             "mean_score":"{{ score }}",
-                            "test":
-                                {% for description_score, description_type, description_comment, description_user in description %}
-                                    {
-                                        "score": "{{ description_score }}",
-                                        "type": "{{ description_type }}",
-                                        "description": "{{ description_comment }}",
-                                        "author": "{{ description_user }}",
-                                    },
-                                {% endfor %}
+                            "test": [
+                    {% for description_score, description_type, description_comment, description_user in description %}
+                        {
+                            "score": "{{ description_score }}",
+                            "type": "{{ description_type }}",
+                            "description": "{{ description_comment }}",
+                            "author": "{{ description_user }}",
+                        },
+                    {% endfor %}
+                    ],
                     },
                     "geometry": {
                             "type": "LineString",
@@ -135,25 +136,41 @@
 <!--отрисовка сегментов-->
     <script>
       var marks = document.getElementById('marks');
-      var author = document.getElementById('author');
+      var authors = document.getElementById('author');
       var authorScore = document.getElementById('author-score');
-      var type = document.getElementById('types');
+      var types = document.getElementById('types');
       var descriptions = document.getElementById('descriptions');
       var segment = 0;
+      let revw = document.getElementById('revw');
+      let i = 0;
+      let whole_d = [];
+
 
       function onEachFeature(feature, layer) {
           layer.on('click', function (e) {
               document.getElementById('info-wrapper').style.display = 'block';
               marks.innerText = e.target.feature.properties.mean_score;
-              author.innerText = e.target.feature.properties.test.author;
-              authorScore.innerText = e.target.feature.properties.test.score;
-              type.innerText = e.target.feature.properties.test.type;
-              descriptions.innerText = e.target.feature.properties.test.description;
               segment = e.target.feature.geometry.coordinates;
+              for (i=0; i<e.target.feature.properties.test.length - 1; ++i) {
+                  let revw2 = revw.cloneNode(true);
+                  revw.after(revw2);
+              }
+              for (i=0; i<=e.target.feature.properties.test.length; ++i) {
+                      authors.innerText = e.target.feature.properties.test[i].author;
+                      authorScore.innerText = e.target.feature.properties.test[i].score;
+                      types.innerText = e.target.feature.properties.test[i].type;
+                      descriptions.innerText = e.target.feature.properties.test[i].description;
+              }
           });
       }
 
-      L.geoJSON(states, {
+
+      {#function addComment () {#}
+      {#    let rev = reviews.cloneNode(true); #}
+      {#    rev.after(reviews);#}
+
+
+           L.geoJSON(states, {
         style: function(feature) {
             switch (feature.properties.mean_score) {
                 case '1':
@@ -170,6 +187,10 @@
         },
         onEachFeature: onEachFeature
       }).addTo(map);
+
+    </script>
+    <script>
+
     </script>
 
 <!--переход на showroute на добавление информации о существующем участке-->
@@ -240,8 +261,6 @@
                 });
             });
          }
-
-
     </script>
 </body>
 </html>
