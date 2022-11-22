@@ -63,15 +63,15 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-12" id="reviews-container">
                                         <div class = "info-header">
                                           <h2>Отзывы</h2>
                                         </div>
-                                        <div class="review" id="revw">
-                                            <p class="author" id="author" >Somebody </p>
-                                            <h4 class="author" id="author-score" ></h4>
-                                            <h4 class="author" id="types"></h4>
-                                            <h4 class="author" id="descriptions"></h4>
+                                        <div class="review" id="review-template" style="display: none">
+                                            <p class="author"></p>
+                                            <h4 class="author-score"></h4>
+                                            <h4 class="type"></h4>
+                                            <h4 class="description"></h4>
                                         </div>
                                     </div>
                                 </div>
@@ -136,31 +136,55 @@
 <!--отрисовка сегментов-->
     <script>
       var marks = document.getElementById('marks');
-      var authors = document.getElementById('author');
-      var authorScore = document.getElementById('author-score');
-      var types = document.getElementById('types');
-      var descriptions = document.getElementById('descriptions');
+      //var authors = document.getElementById('author');
+      //var authorScore = document.getElementById('author-score');
+      //var types = document.getElementById('types');
+      //var descriptions = document.getElementById('descriptions');
       var segment = 0;
-      let revw = document.getElementById('revw');
-      let i = 0;
+      //let revw = document.getElementById('revw');
       let whole_d = [];
 
 
       function onEachFeature(feature, layer) {
           layer.on('click', function (e) {
+              // make visible
               document.getElementById('info-wrapper').style.display = 'block';
+              // mean score at top
               marks.innerText = e.target.feature.properties.mean_score;
               segment = e.target.feature.geometry.coordinates;
-              for (i=0; i<e.target.feature.properties.test.length - 1; ++i) {
-                  let revw2 = revw.cloneNode(true);
-                  revw.after(revw2);
+
+              //for (let i=0; i<e.target.feature.properties.test.length - 1; ++i) {
+              //    let revw2 = revw.cloneNode(true);
+              //    revw.after(revw2);
+              //}
+
+              const reviewsContainer = document.getElementById('reviews-container');
+              const commentModels = e.target.feature.properties.test;
+              // review template это шаблон нашего компонента отзыва - невидимый штмл элемент
+              // он там наверху уже есть найди его по ид
+              const reviewElement = document.getElementById('review-template');
+              for (const commentModel of commentModels) {
+                  // нам дали отличное логирование в js - давайте его юзать
+                  console.log(commentModel);
+                  // вот тута мы клонируем цей пустой элемент
+                  const reviewView = reviewElement.cloneNode(true);
+                  // вызываем на node методы element - потому что мы в js блин мы все тут можем
+                  reviewView.removeAttribute('id');
+                  reviewView.style.display = 'block';
+                  // набиваем данными из модели
+                  const author = reviewView.querySelector('.author');
+                  author.innerText = commentModel.author;
+                  // вставляем его в дом
+                  reviewsContainer.append(reviewView);
               }
-              for (i=0; i<=e.target.feature.properties.test.length; ++i) {
-                      authors.innerText = e.target.feature.properties.test[i].author;
-                      authorScore.innerText = e.target.feature.properties.test[i].score;
-                      types.innerText = e.target.feature.properties.test[i].type;
-                      descriptions.innerText = e.target.feature.properties.test[i].description;
-              }
+
+              // ты сможешь это в общую генерацию перенести (наверх)
+              //for (let i=0; i<=e.target.feature.properties.test.length; ++i) {
+              //        authors.innerText = e.target.feature.properties.test[i].author;
+              //        authorScore.innerText = e.target.feature.properties.test[i].score;
+              //        types.innerText = e.target.feature.properties.test[i].type;
+              //        descriptions.innerText = e.target.feature.properties.test[i].description;
+              //}
           });
       }
 
@@ -187,9 +211,6 @@
         },
         onEachFeature: onEachFeature
       }).addTo(map);
-
-    </script>
-    <script>
 
     </script>
 
