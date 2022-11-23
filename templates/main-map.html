@@ -63,15 +63,17 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-12" id="reviews-container">
+                                    <div class="col-md-12">
                                         <div class = "info-header">
                                           <h2>Отзывы</h2>
                                         </div>
-                                        <div class="review" id="review-template" style="display: none">
-                                            <p class="author"></p>
-                                            <h4 class="author-score"></h4>
-                                            <h4 class="type"></h4>
-                                            <h4 class="description"></h4>
+                                        <div class="review-wrapper" id="reviews-container">
+                                            <div class="review" id="review-template" style="display: none">
+                                                <p class="author"></p>
+                                                <h4 class="author-score"></h4>
+                                                <h4 class="type"></h4>
+                                                <h4 class="description"></h4>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -149,20 +151,23 @@
           layer.on('click', function (e) {
               // make visible
               document.getElementById('info-wrapper').style.display = 'block';
+
               // mean score at top
               marks.innerText = e.target.feature.properties.mean_score;
               segment = e.target.feature.geometry.coordinates;
 
-              //for (let i=0; i<e.target.feature.properties.test.length - 1; ++i) {
-              //    let revw2 = revw.cloneNode(true);
-              //    revw.after(revw2);
-              //}
-
               const reviewsContainer = document.getElementById('reviews-container');
+              //проверка на наличие дочерних записей и очистка
+
+              while (reviewsContainer.lastChild && reviewsContainer.childNodes.length > 2) {
+                  reviewsContainer.removeChild(reviewsContainer.lastChild);
+              }
+
               const commentModels = e.target.feature.properties.test;
               // review template это шаблон нашего компонента отзыва - невидимый штмл элемент
               // он там наверху уже есть найди его по ид
               const reviewElement = document.getElementById('review-template');
+
               for (const commentModel of commentModels) {
                   // нам дали отличное логирование в js - давайте его юзать
                   console.log(commentModel);
@@ -173,7 +178,13 @@
                   reviewView.style.display = 'block';
                   // набиваем данными из модели
                   const author = reviewView.querySelector('.author');
+                  const authorScore = reviewView.querySelector('.author-score');
+                  const type = reviewView.querySelector('.type');
+                  const description = reviewView.querySelector('.description');
                   author.innerText = commentModel.author;
+                  authorScore.innerText = commentModel.score;
+                  type.innerText = commentModel.type;
+                  description.innerText = commentModel.description;
                   // вставляем его в дом
                   reviewsContainer.append(reviewView);
               }
