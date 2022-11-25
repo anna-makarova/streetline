@@ -17,9 +17,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
-    <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
-    integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="
-    crossorigin=""></script>
+    <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js" integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ==" crossorigin=""></script>
 
   <!-- Load Esri Leaflet Geocoder from CDN -->
   <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.css"
@@ -30,35 +28,32 @@
     crossorigin=""></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.78.0/dist/L.Control.Locate.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.78.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+
 </head>
 <body>
     <div class="main">
         <div class="wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="geo-location-wrapper">
-                                <span class="btn geo-location"><i class="fa fa-map-marker"></i><span class="text">Find My Position</span></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-md-3">
                         <div class="info-wrapper" id="info-wrapper">
                             <div class="info-box">
+                                <img id="close" class="close" src="{% static "img/010-close-1.png"%}"  title="Закрыть" />
                                 <div class="row">
-                                    <div class="col-md-3">
-                                        <div class="marks">
-                                            <h1 id="marks"></h1>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <div class="rating-result">
-                                            <span id="1" ></span>
-                                            <span id="2" ></span>
-                                            <span id="3" ></span>
-                                            <span id="4" ></span>
-                                            <span id="5" ></span>
+                                    <div class="col-md-12">
+                                        <div class="mark-wrapper">
+                                            <div class="marks">
+                                                <h1 id="marks"></h1>
+                                            </div>
+                                            <div class="rating-result">
+                                                <span id="1" ></span>
+                                                <span id="2" ></span>
+                                                <span id="3" ></span>
+                                                <span id="4" ></span>
+                                                <span id="5" ></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -70,26 +65,32 @@
                                         <div class="review-wrapper" id="reviews-container">
                                             <div class="review" id="review-template" style="display: none">
                                                 <p class="author"></p>
-                                                <h4 class="author-score"></h4>
-                                                <h4 class="type"></h4>
-                                                <h4 class="description"></h4>
+                                                <div class="author-score"></div>
+                                                <div class="type"></div>
+                                                <div class="description"></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class = "col-md-12">
-                                        <button class="add-info" id="add-info"> Добавить информацию</button>
+                                        <div class="button-wrapper">
+                                            <button class="add-info" id="add-info"> Добавить информацию</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="icon">
-                <img id="segment" class="segment" src="{% static "img/segment-img.png"%}" title="Текст при наведении курсора"/>
-                <img id="route" class="route" src="{% static "img/route-img.png"%}"  title="Текст при наведении курсора" />
+                <div class="icon-wrapper">
+                     <div class="icon">
+                         <img id="segment" class="segment" src="{% static "img/009-star-1.png"%}" title="Добавить участок"/>
+                         <img id="route" class="route" src="{% static "img/002-route-1.png"%}"  title="Построить маршрут" />
+                         <img id="exit" class="exit" src="{% static "img/010-close-1.png"%}"  title="Закрыть" />
+{#                         <img id="loc" class="location" src="{% static "img/012-placeholder.png"%}"  title="Моё местоположение" />#}
+                     </div>
+                </div>
             </div>
         </div>
     </div>
@@ -132,20 +133,16 @@
       data={};
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: "&copy; <a href=\"https://osm.org/copyright\">OpenStreetMap</a> contributors"
-      }).addTo(map);
+      }
+      ).addTo(map);
+      L.control.locate().setPosition('topright').addTo(map);
+
     </script>
 
 <!--отрисовка сегментов-->
     <script>
       var marks = document.getElementById('marks');
-      //var authors = document.getElementById('author');
-      //var authorScore = document.getElementById('author-score');
-      //var types = document.getElementById('types');
-      //var descriptions = document.getElementById('descriptions');
       var segment = 0;
-      //let revw = document.getElementById('revw');
-      let whole_d = [];
-
 
       function onEachFeature(feature, layer) {
           layer.on('click', function (e) {
@@ -186,44 +183,48 @@
                   type.innerText = commentModel.type;
                   description.innerText = commentModel.description;
                   // вставляем его в дом
-                  reviewsContainer.append(reviewView);
+                  reviewsContainer.append(reviewView)
               }
-
-              // ты сможешь это в общую генерацию перенести (наверх)
-              //for (let i=0; i<=e.target.feature.properties.test.length; ++i) {
-              //        authors.innerText = e.target.feature.properties.test[i].author;
-              //        authorScore.innerText = e.target.feature.properties.test[i].score;
-              //        types.innerText = e.target.feature.properties.test[i].type;
-              //        descriptions.innerText = e.target.feature.properties.test[i].description;
-              //}
           });
       }
 
 
-      {#function addComment () {#}
-      {#    let rev = reviews.cloneNode(true); #}
-      {#    rev.after(reviews);#}
+      let close = document.getElementById('close');
 
+      close.addEventListener("click", closeClick);
+       function closeClick() {
+          document.getElementById('info-wrapper').style.display = 'none';
+       };
 
-           L.geoJSON(states, {
+      L.geoJSON(states, {
         style: function(feature) {
             switch (feature.properties.mean_score) {
                 case '1':
-                    return {color: "#460A0A", weight: 7};
+                    return {color: "#460A0A", weight: 5};
                 case '2':
-                    return {color: "#F32A2A", weight: 7};
+                    return {color: "#F32A2A", weight: 5};
                 case '3':
-                    return {color: "#FF8F00", weight: 7};
+                    return {color: "#FF8F00", weight: 5};
                 case '4':
-                    return {color: "#FFD800", weight: 7};
+                    return {color: "#FFD800", weight: 5};
                 case '5':
-                    return {color: "#5FE242", weight: 7};
+                    return {color: "#5FE242", weight: 5};
             }
         },
         onEachFeature: onEachFeature
       }).addTo(map);
-
     </script>
+      {#let b = window.getComputedStyle(document.getElementById('info-wrapper')).display;#}
+      {##}
+      {#function onMapClick() {#}
+      {#    if (document.getElementById('info-wrapper').style.display === 'block' ) {#}
+      {#        document.getElementById('info-wrapper').style.display = 'none';#}
+      {#    }#}
+      {#  }#}
+      {#  map.on('click', onMapClick);#}
+
+
+
 
 <!--переход на showroute на добавление информации о существующем участке-->
     <script>
@@ -232,6 +233,7 @@
             const baseurl="{% url 'main' %}";
             const route_url=baseurl + 'segment/' + [segment[0][1]]+','+[segment[0][0]]+','+[segment[segment.length - 1][1]]+','+[segment[segment.length - 1][0]];
             window.location.replace(route_url);
+            console.log(segment)
         }
     </script>
     <!--переход на showroute и навигацию по новым двум точкам-->
@@ -244,34 +246,44 @@
         var start_lon = 0;
         var end_lat = 0;
         var end_lon = 0;
+        let a = 0;
+        var exit = document.getElementById('exit');
 
         segmentButton.addEventListener("click", getRouteCoordinates);
         routeButton.addEventListener("click", getRouteNavigationCoordinates);
+        exit.addEventListener("click", exitClick);
 
+        function exitClick() {
+            location.reload()
+
+        }
          function getRouteCoordinates () {
-            map.on('click', function (e){
-                count += 1;
-                console.log(e);
-                gcs.reverse().latlng(e.latlng).run((err, res)=>{
-                    if(err) return;
-                    L.marker(res.latlng).addTo(map).bindPopup(res.address.Match_addr).openPopup();
-                    if (count === 1){
-                         start_lat =res.latlng['lat'];
-                         start_lon =res.latlng['lng'];
-                    }
-                    else if(count===2){
-                        end_lat =res.latlng['lat'];
-                        end_lon =res.latlng['lng'];
-                        const baseurl="{% url 'main' %}";
-                        const route_url=baseurl+ 'segment/' + start_lat + ',' + start_lon + ',' + end_lat + ',' + end_lon;
-                        count=0;
-                        window.location.replace(route_url);
-                    }
-                });
-            });
+            exit.style.display = 'block';
+             map.on('click', function (e){
+                    count += 1;
+                    console.log(e);
+                    gcs.reverse().latlng(e.latlng).run((err, res)=>{
+                        if(err) return;
+                        L.marker(res.latlng).addTo(map).bindPopup(res.latlng).openPopup();
+                        if (count === 1){
+                             start_lat =res.latlng['lat'];
+                             start_lon =res.latlng['lng'];
+                        }
+                        else if(count===2){
+                            end_lat =res.latlng['lat'];
+                            end_lon =res.latlng['lng'];
+                            const baseurl="{% url 'main' %}";
+                            const route_url=baseurl+ 'segment/' + start_lat + ',' + start_lon + ',' + end_lat + ',' + end_lon;
+                            count=0;
+                            window.location.replace(route_url);
+                            console.log(start_lat,start_lon, end_lat, end_lon)
+                        }
+                    });
+             });
          }
 
          function getRouteNavigationCoordinates () {
+            exit.style.display = 'block';
             map.on('click', function (e){
                 count += 1;
                 console.log(e);

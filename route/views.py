@@ -9,6 +9,7 @@ from .models import Segment, Description
 from .forms import CreateUserForm
 from . import getroute
 import json
+from django.contrib.auth.models import User
 
 def load_graphs():
     map_graph = ox.graph_from_place('Yekaterinburg, Russia', 'walk')
@@ -69,11 +70,13 @@ def showroute(request, lat_start, long_start, lat_stop, long_stop):
 
     elif request.method == 'POST' and 'add_to_db_form' in request.POST:
         score = int(request.POST.get('score')) # достаем данные из формы и приводим к нужным типам
+        user = User.objects.all()[0]
         type_dict = {
-            "0": 'Брусчатка',
-            "1": 'Ямы',
-            "2": 'Поребрики',
-            "3": 'Ливневка'
+            "0": 'Хорошая дорога',
+            "1": 'Брусчатка',
+            "2": 'Ямы',
+            "3": 'Поребрики',
+            "4": 'Ливневка'
         }
         score_coeffs = {
             5: 1,
@@ -87,7 +90,7 @@ def showroute(request, lat_start, long_start, lat_stop, long_stop):
 
         route, coordinates = getroute.get_route(map_graph, long_start, lat_start, long_stop, lat_stop)
         json_path = json.dumps(coordinates)
-        user = request.user
+        # user = request.user
         try:
             segment = Segment.objects.filter(segment=json_path)[0]
             previous_scores = [description.score for description in Description.objects.filter(segment=segment)[:10]]
