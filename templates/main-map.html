@@ -264,7 +264,7 @@
                     console.log(e);
                     gcs.reverse().latlng(e.latlng).run((err, res)=>{
                         if(err) return;
-                        L.marker(res.latlng).addTo(map).bindPopup(res.latlng).openPopup();
+                        L.marker(res.latlng).addTo(map).bindPopup(res.address.Match_addr).openPopup();
                         if (count === 1){
                              start_lat =res.latlng['lat'];
                              start_lon =res.latlng['lng'];
@@ -276,7 +276,6 @@
                             const route_url=baseurl+ 'segment/' + start_lat + ',' + start_lon + ',' + end_lat + ',' + end_lon;
                             count=0;
                             window.location.replace(route_url);
-                            console.log(start_lat,start_lon, end_lat, end_lon)
                         }
                     });
              });
