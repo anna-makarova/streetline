@@ -49,6 +49,14 @@
     right: 10px;
     margin-top: 150px;
 }
+.home {
+    background: white;
+    width: 50px;
+    margin-top: 20px;
+    border-radius: 10px;
+    padding: 7px;
+    box-shadow: -1px 0px 11px;
+}
 .segment {
     background: white;
     width: 50px;
@@ -56,6 +64,10 @@
     border-radius: 10px;
     padding: 7px;
     box-shadow: -1px 0px 11px;
+}
+.segment :hover{
+    box-shadow: inset 0 0 5px rgb(0 0 0 / 80%);
+    background: #5a5a5a;
 }
 .route {
     background: white;

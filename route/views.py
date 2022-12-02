@@ -16,6 +16,7 @@ def load_graphs():
     navigation_graph = map_graph.copy()
     return navigation_graph, map_graph
 
+
 navigation_graph, map_graph = load_graphs()
 
 

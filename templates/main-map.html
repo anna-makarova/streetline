@@ -85,6 +85,7 @@
                 </div>
                 <div class="icon-wrapper">
                      <div class="icon">
+                         <img id="home" class="home" src="{% static "img/home.png"%}"  title="Домой" />
                          <img id="segment" class="segment" src="{% static "img/009-star-1.png"%}" title="Добавить участок"/>
                          <img id="route" class="route" src="{% static "img/002-route-1.png"%}"  title="Построить маршрут" />
                          <img id="exit" class="exit" src="{% static "img/010-close-1.png"%}"  title="Закрыть" />
@@ -248,15 +249,22 @@
         var end_lon = 0;
         let a = 0;
         var exit = document.getElementById('exit');
+        var home = document.getElementById('home');
 
         segmentButton.addEventListener("click", getRouteCoordinates);
         routeButton.addEventListener("click", getRouteNavigationCoordinates);
         exit.addEventListener("click", exitClick);
+        home.addEventListener('click', goHome);
 
         function exitClick() {
             location.reload()
 
         }
+        function goHome() {
+            const baseurl="{% url 'main' %}";
+            window.location.replace(baseurl);
+        }
+
          function getRouteCoordinates () {
             exit.style.display = 'block';
              map.on('click', function (e){
@@ -264,7 +272,7 @@
                     console.log(e);
                     gcs.reverse().latlng(e.latlng).run((err, res)=>{
                         if(err) return;
-                        L.marker(res.latlng).addTo(map).bindPopup(res.latlng).openPopup();
+                        L.marker(res.latlng).addTo(map).bindPopup(res.address.Match_addr).openPopup();
                         if (count === 1){
                              start_lat =res.latlng['lat'];
                              start_lon =res.latlng['lng'];

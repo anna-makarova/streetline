@@ -32,7 +32,20 @@
 </head>
 <body>
 
-   <div id="map">
+   <div class="main">
+        <div class="container-fluid">
+            <div class="icon-wrapper">
+                     <div class="icon">
+                         <img id="home" class="home" src="{% static "img/home.png"%}"  title="Домой" />
+                         <img id="segment" class="segment" src="{% static "img/009-star-1.png"%}" title="Добавить участок"/>
+                         <img id="route" class="route" src="{% static "img/002-route-1.png"%}"  title="Построить маршрут" />
+                         <img id="exit" class="exit" src="{% static "img/010-close-1.png"%}"  title="Закрыть" />
+{#                         <img id="loc" class="location" src="{% static "img/012-placeholder.png"%}"  title="Моё местоположение" />#}
+                     </div>
+            </div>
+        </div>
+    </div>
+<div id="map">
 
    </div>
 
@@ -46,6 +59,16 @@
             },
         }];
     </script>
+
+   <script>
+       var home = document.getElementById('home');
+        home.addEventListener('click', goHome);
+
+        function goHome() {
+            const baseurl="{% url 'main' %}";
+            window.location.replace(baseurl);
+        }
+   </script>
 
     <script>
       var map = L.map('map').setView([56.8,60.6], 15);
