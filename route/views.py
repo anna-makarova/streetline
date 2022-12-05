@@ -1,6 +1,5 @@
-import folium
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
+
 from django.contrib.auth import authenticate, login, logout
 import osmnx as ox
 import networkx as nx
@@ -17,7 +16,7 @@ def load_graphs():
     return navigation_graph, map_graph
 
 
-navigation_graph, map_graph = load_graphs()
+#navigation_graph, map_graph = load_graphs()
 
 
 def register_page(request):
@@ -29,7 +28,6 @@ def register_page(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
-            user = form.cleaned_data.get('username')
             return redirect('login')
         else:
             context = {'form': form}

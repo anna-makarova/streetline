@@ -16,6 +16,7 @@ def get_route(graph, start_lat, start_lon, end_lat, end_lon):
     return route, coordinates
 
 
+
 def add_weights_from_segment(graph, route, score, score_coeffs):
     pairs = [(route[i - 1], route[i]) for i in range(1, len(route))]
     for pair in pairs:

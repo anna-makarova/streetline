@@ -16,7 +16,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from route.api import NavigationApi, SegmentApi
+from route.api import NavigationApi, SegmentApi, UserApi, DescriptionApi
 from route.views import showroute, register_page, login_page, main_map, navigation_page, test_page
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
@@ -30,6 +30,8 @@ urlpatterns = [
 
     path('api/navigation/<str:lat_start>,<str:long_start>,<str:lat_stop>,<str:long_stop>', NavigationApi.as_view(), name='navigation_api'),
     path('api/segment/<str:lat_start>,<str:long_start>,<str:lat_stop>,<str:long_stop>', SegmentApi.as_view(), name='segment_api'),
+    path('api/users', UserApi.as_view(), name='user_api'),
+    path('api/new', DescriptionApi.as_view(), name='objects_api'),
 
 
     path('test/', test_page, name='test'), # убрать при релизе
