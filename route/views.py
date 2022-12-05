@@ -16,7 +16,7 @@ def load_graphs():
     return navigation_graph, map_graph
 
 
-#navigation_graph, map_graph = load_graphs()
+navigation_graph, map_graph = load_graphs()
 
 
 def register_page(request):
