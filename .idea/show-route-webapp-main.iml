@@ -24,6 +24,11 @@
     <orderEntry type="library" name="leaflet" level="application" />
     <orderEntry type="library" name="bootstrap" level="application" />
     <orderEntry type="library" name="leaflet.locatecontrol" level="application" />
+    <orderEntry type="library" name="bootstrap" level="application" />
+    <orderEntry type="library" name="leaflet" level="application" />
+    <orderEntry type="library" name="esri-leaflet" level="application" />
+    <orderEntry type="library" name="esri-leaflet-geocoder" level="application" />
+    <orderEntry type="library" name="jquery" level="application" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="format" value="PLAIN" />

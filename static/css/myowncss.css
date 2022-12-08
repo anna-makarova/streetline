@@ -1,4 +1,5 @@
 /*main*/
+{% load static %}
 .main {
     z-index: 1;
     overflow: hidden;
@@ -49,50 +50,46 @@
     right: 10px;
     margin-top: 150px;
 }
-.home {
-    background: white;
+.icon-img {
     width: 50px;
-    margin-top: 20px;
+    background: white;
+
     border-radius: 10px;
     padding: 7px;
+}
+.home {
     box-shadow: -1px 0px 11px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+.home :active{
+    box-shadow: inset 0 0 5px rgb(0 0 0 / 80%);
 }
 .segment {
-    background: white;
-    width: 50px;
+    box-shadow: -1px 0px 11px;
     margin-top: 20px;
     border-radius: 10px;
-    padding: 7px;
-    box-shadow: -1px 0px 11px;
 }
-.segment :hover{
+.segment :active{
     box-shadow: inset 0 0 5px rgb(0 0 0 / 80%);
-    background: #5a5a5a;
+
 }
 .route {
-    background: white;
-    margin-top: 20px;
-    width: 50px;
-    border-radius: 10px;
-    padding: 7px;
     box-shadow: -1px 0px 11px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+.route :active{
+    box-shadow: inset 0 0 5px rgb(0 0 0 / 80%);
 }
 .exit {
     display: none;
-    background: white;
-    margin-top: 20px;
-    width: 50px;
-    border-radius: 10px;
-    padding: 7px;
     box-shadow: -1px 0px 11px;
+    margin-top: 20px;
+    border-radius: 10px;
 }
-.location {
-    background: white;
-    margin-top: 20px;
-    width: 50px;
-    border-radius: 10px;
-    padding: 7px;
-    box-shadow: -1px 0px 11px;
+.exit :active{
+    box-shadow: inset 0 0 5px rgb(0 0 0 / 80%);
 }
 .leaflet-touch .leaflet-bar a {
     width: 40px;
@@ -243,22 +240,25 @@
 	width: max-content;
     margin: 0px 0px 10px 20px;
     display: flex;
-    flex-direction: row-reverse;
+    /*flex-direction: row-reverse;*/
 }
-.rating-result span {
-	padding: 0;
-	font-size: 40px;
-	margin: 0px;
-	line-height: 1.7;
-	color: lightgrey;
-	text-shadow: 1px 1px #bbb;
+
+.star-check{
+ display: none;
 }
-.rating-result > span:before {
-	content: '★';
+.str{
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background: url(https://cdn-icons-png.flaticon.com/512/16/16666.png)
+
 }
-.span:active ~ span{
-	color: gold;
-	text-shadow: 1px 1px #c60;
+#star1:checked ~ .m :nth-child(1),
+#star2:checked ~ .m :nth-child(-n+2),
+#star3:checked ~ .m :nth-child(-n+3),
+#star4:checked ~ .m :nth-child(-n+4),
+#star5:checked ~ .m :nth-child(-n+5){
+  background:url(http://cyberstatic.net/images/statusicon/user_online.png)
 }
 
 

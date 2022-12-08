@@ -47,12 +47,19 @@
                                             <div class="marks">
                                                 <h1 id="marks"></h1>
                                             </div>
-                                            <div class="rating-result">
-                                                <span id="1" ></span>
-                                                <span id="2" ></span>
-                                                <span id="3" ></span>
-                                                <span id="4" ></span>
-                                                <span id="5" ></span>
+                                            <div class="rating-result"  id="m">
+                                                <input type="radio" id="star1" name="stars" class="star-check">
+                                                <input type="radio" id="star2" name="stars" class="star-check">
+                                                <input type="radio" id="star3" name="stars" class="star-check">
+                                                <input type="radio" id="star4" name="stars" class="star-check">
+                                                <input type="radio" id="star5" name="stars" class="star-check">
+                                                <div class="m" >
+                                                  <label for="star1" class="str"></label>
+                                                  <label for="star2" class="str"></label>
+                                                  <label for="star3" class="str"></label>
+                                                  <label for="star4" class="str"></label>
+                                                  <label for="star5" class="str"></label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -85,10 +92,19 @@
                 </div>
                 <div class="icon-wrapper">
                      <div class="icon">
-                         <img id="home" class="home" src="{% static "img/home.png"%}"  title="Домой" />
-                         <img id="segment" class="segment" src="{% static "img/009-star-1.png"%}" title="Добавить участок"/>
-                         <img id="route" class="route" src="{% static "img/002-route-1.png"%}"  title="Построить маршрут" />
-                         <img id="exit" class="exit" src="{% static "img/010-close-1.png"%}"  title="Закрыть" />
+                         <div id="home" class="home">
+                             <img class="icon-img" src="{% static "img/home.png"%}"  title="Домой" />
+                         </div>
+                         <div id="segment" class="segment">
+                             <img class="icon-img" src="{% static "img/009-star-1.png"%}" title="Добавить участок"/>
+                         </div>
+                         <div id="route" class="route">
+                             <img class="icon-img" src="{% static "img/002-route-1.png"%}"  title="Построить маршрут" />
+                         </div>
+                         <div id="exit" class="exit">
+                             <img class="icon-img" src="{% static "img/010-close-1.png"%}"  title="Закрыть" />
+                         </div>
+
 {#                         <img id="loc" class="location" src="{% static "img/012-placeholder.png"%}"  title="Моё местоположение" />#}
                      </div>
                 </div>
@@ -144,6 +160,10 @@
     <script>
       var marks = document.getElementById('marks');
       var segment = 0;
+      var stars = document.getElementById('m');
+      var ndStars = 0;
+
+
 
       function onEachFeature(feature, layer) {
           layer.on('click', function (e) {
@@ -152,6 +172,9 @@
 
               // mean score at top
               marks.innerText = e.target.feature.properties.mean_score;
+              ndStars = stars.children;
+              ndStars[marks.innerText-1].checked = true;
+
               segment = e.target.feature.geometry.coordinates;
 
               const reviewsContainer = document.getElementById('reviews-container');
@@ -197,19 +220,25 @@
           document.getElementById('info-wrapper').style.display = 'none';
        };
 
+       function chooseStar(){
+           if (rating === 1){
+
+           }
+       }
+
       L.geoJSON(states, {
         style: function(feature) {
             switch (feature.properties.mean_score) {
                 case '1':
-                    return {color: "#460A0A", weight: 5};
+                    return {color: "#460A0A", weight: 4};
                 case '2':
-                    return {color: "#F32A2A", weight: 5};
+                    return {color: "#F32A2A", weight: 4};
                 case '3':
-                    return {color: "#FF8F00", weight: 5};
+                    return {color: "#FF8F00", weight: 4};
                 case '4':
-                    return {color: "#FFD800", weight: 5};
+                    return {color: "#FFD800", weight: 4};
                 case '5':
-                    return {color: "#5FE242", weight: 5};
+                    return {color: "#5FE242", weight: 4};
             }
         },
         onEachFeature: onEachFeature
