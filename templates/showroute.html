@@ -73,8 +73,11 @@
             </div>
             <div class="icon-wrapper">
                      <div class="icon">
+                         <div id="person" class="person">
+                             <img class="icon-img" src="{% static "img/person.jpg"%}"  title="Войти" />
+                         </div>
                          <div id="home" class="home">
-                            <img id="home" class="icon-img" src="{% static "img/home.png"%}"  title="Домой" />
+                            <img id="home" class="icon-img" src="{% static "img/homes.jpg"%}"  title="Домой" />
                          </div>
                      </div>
             </div>
@@ -125,11 +128,18 @@
         var marker2 = L.marker([lat2, lng2]).addTo(map)
 
         var home = document.getElementById('home');
+        var person = document.getElementById('person')
         home.addEventListener('click', goHome);
+        person.addEventListener('click', goToPerson)
+
 
         function goHome() {
             const baseurl="{% url 'main' %}";
             window.location.replace(baseurl);
+        }
+
+        function goToPerson() {
+            window.location.replace('login/');
         }
     </script>
 </body>

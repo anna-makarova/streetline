@@ -21,6 +21,9 @@
     integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="
     crossorigin=""></script>
 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
   <!-- Load Esri Leaflet Geocoder from CDN -->
   <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.css"
     integrity="sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g=="
@@ -36,8 +39,11 @@
         <div class="container-fluid">
             <div class="icon-wrapper">
                      <div class="icon">
-                          <div id="home" class="home">
-                            <img id="home" class="icon-img" src="{% static "img/home.png"%}"  title="Домой" />
+                         <div id="person" class="person">
+                             <img class="icon-img" src="{% static "img/person.jpg"%}"  title="Войти" />
+                         </div>
+                         <div id="home" class="home">
+                            <img id="home" class="icon-img" src="{% static "img/homes.jpg"%}"  title="Домой" />
                          </div>
                      </div>
             </div>
@@ -60,11 +66,18 @@
 
    <script>
        var home = document.getElementById('home');
+        var person = document.getElementById('person')
         home.addEventListener('click', goHome);
+        person.addEventListener('click', goToPerson)
+
 
         function goHome() {
             const baseurl="{% url 'main' %}";
             window.location.replace(baseurl);
+        }
+
+        function goToPerson() {
+            window.location.replace('login/');
         }
    </script>
 
@@ -82,6 +95,7 @@
 
       }
       L.geoJSON(states).addTo(map);
+      L.Control.geocoder().addTo(map);
 
     </script>
     <script>

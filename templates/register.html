@@ -25,11 +25,22 @@
                                     <img class="reg-img" src="{% static "img/register-4.jpg"%}" title=""/>
                                 </div>
                                 <div class="form-wrapper">
+                                    <div class="log-maintext">
+                                        Зарегистрироваться
+                                    </div>
                                     <p>{{ warning }}</p>
+
                                             <form method="post" action="">
                                                 {% csrf_token %}
-                                                {{ form.as_p }}
-                                                <input type="submit" name="create_user">
+                                                <input type="text" name="username" class="log-input" maxlength="150" autofocus required id="id_username" placeholder="Логин">
+                                                <input type="email" name="email" class="log-input" maxlength="254" id="id_email" placeholder="Email">
+                                                <input type="password" name="password1" class="log-input" autocomplete="new-password" required id="id_password1" placeholder="Пароль" >
+                                                <input type="password" name="password2" class="log-input" autocomplete="new-password" required id="id_password2" placeholder="Повторите пароль">
+                                                <div>
+                                                    <input type="submit" name="create_user" class="log-submit" value="Зарегистрироваться">
+                                                </div>
+
+                                                {{ form.errors }}
                                                 {{ form.errors }}
                                             </form>
                                 </div>

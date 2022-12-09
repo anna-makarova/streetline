@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
+     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
     <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js" integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ==" crossorigin=""></script>
 
   <!-- Load Esri Leaflet Geocoder from CDN -->
@@ -29,7 +32,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.78.0/dist/L.Control.Locate.min.css" />
-<script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.78.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.78.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
 
 </head>
 <body>
@@ -40,7 +43,7 @@
                     <div class="col-md-3">
                         <div class="info-wrapper" id="info-wrapper">
                             <div class="info-box">
-                                <img id="close" class="close" src="{% static "img/010-close-1.png"%}"  title="Закрыть" />
+                                <img id="close" class="close" src="{% static "img/crosses.jpg"%}"  title="Закрыть" />
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="mark-wrapper">
@@ -72,7 +75,7 @@
                                         <div class="review-wrapper" id="reviews-container">
                                             <div class="review" id="review-template" style="display: none">
                                                 <p class="author"></p>
-                                                <div class="author-score"></div>
+                                                <div class="author-score">Тип: </div>
                                                 <div class="type"></div>
                                                 <div class="description"></div>
                                             </div>
@@ -92,17 +95,20 @@
                 </div>
                 <div class="icon-wrapper">
                      <div class="icon">
+                         <div id="person" class="person">
+                             <img class="icon-img" src="{% static "img/person.jpg"%}"  title="Войти" />
+                         </div>
                          <div id="home" class="home">
-                             <img class="icon-img" src="{% static "img/home.png"%}"  title="Домой" />
+                             <img class="icon-img" src="{% static "img/homes.jpg"%}"  title="На главную" />
                          </div>
                          <div id="segment" class="segment">
-                             <img class="icon-img" src="{% static "img/009-star-1.png"%}" title="Добавить участок"/>
+                             <img class="icon-img" src="{% static "img/plus.jpg"%}" title="Добавить участок"/>
                          </div>
                          <div id="route" class="route">
                              <img class="icon-img" src="{% static "img/002-route-1.png"%}"  title="Построить маршрут" />
                          </div>
                          <div id="exit" class="exit">
-                             <img class="icon-img" src="{% static "img/010-close-1.png"%}"  title="Закрыть" />
+                             <img class="icon-img" src="{% static "img/crosses.jpg"%}"  title="Закрыть" />
                          </div>
 
 {#                         <img id="loc" class="location" src="{% static "img/012-placeholder.png"%}"  title="Моё местоположение" />#}
@@ -148,11 +154,54 @@
       var map = L.map('map').setView([56.838011,60.597465], 13);
       map.zoomControl.setPosition('topright');
       data={};
+
+      {#var geocoder = L.Control.Geocoder.nominatim();#}
+      {#if (typeof URLSearchParams !== 'undefined' && location.search) {#}
+      {#  // parse /?geocoder=nominatim from URL#}
+      {#  var params = new URLSearchParams(location.search);#}
+      {#  var geocoderString = params.get('geocoder');#}
+      {#  if (geocoderString && L.Control.Geocoder[geocoderString]) {#}
+      {#    console.log('Using geocoder', geocoderString);#}
+      {#    geocoder = L.Control.Geocoder[geocoderString]();#}
+      {#  } else if (geocoderString) {#}
+      {#    console.warn('Unsupported geocoder', geocoderString);#}
+      {#  }#}
+
+
+      {#var control = L.Control.geocoder({#}
+      {#  query: 'Moon',#}
+      {#  placeholder: 'Search here...',#}
+      {#  geocoder: geocoder#}
+
+      {#var marker;#}
+      {##}
+
+
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: "&copy; <a href=\"https://osm.org/copyright\">OpenStreetMap</a> contributors"
       }
       ).addTo(map);
       L.control.locate().setPosition('topright').addTo(map);
+      {#L.Control.geocoder().addTo(map);#}
+
+      {#map.on('click', function(e) {#}
+      {#  geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function(results) {#}
+      {#    var r = results[0];#}
+      {#    if (r) {#}
+      {#      if (marker) {#}
+      {#        marker#}
+      {#          .setLatLng(r.center)#}
+      {#          .setPopupContent(r.html || r.name)#}
+      {#          .openPopup();#}
+      {#      } else {#}
+      {#        marker = L.marker(r.center)#}
+      {#          .bindPopup(r.name)#}
+      {#          .addTo(map)#}
+      {#          .openPopup();#}
+      {#      }#}
+      {#    }#}
+      {#  });#}
+
 
     </script>
 
@@ -162,8 +211,6 @@
       var segment = 0;
       var stars = document.getElementById('m');
       var ndStars = 0;
-
-
 
       function onEachFeature(feature, layer) {
           layer.on('click', function (e) {
@@ -203,8 +250,8 @@
                   const type = reviewView.querySelector('.type');
                   const description = reviewView.querySelector('.description');
                   author.innerText = commentModel.author;
-                  authorScore.innerText = commentModel.score;
-                  type.innerText = commentModel.type;
+                  authorScore.innerText = 'Оценка: ' + commentModel.score;
+                  type.innerText = 'Тип: ' + commentModel.type;
                   description.innerText = commentModel.description;
                   // вставляем его в дом
                   reviewsContainer.append(reviewView)
@@ -220,25 +267,19 @@
           document.getElementById('info-wrapper').style.display = 'none';
        };
 
-       function chooseStar(){
-           if (rating === 1){
-
-           }
-       }
-
       L.geoJSON(states, {
         style: function(feature) {
             switch (feature.properties.mean_score) {
                 case '1':
-                    return {color: "#460A0A", weight: 4};
+                    return {color: "#741717", weight: 4};
                 case '2':
-                    return {color: "#F32A2A", weight: 4};
+                    return {color: "#ec2c25", weight: 4};
                 case '3':
-                    return {color: "#FF8F00", weight: 4};
+                    return {color: "#f78f23", weight: 4};
                 case '4':
-                    return {color: "#FFD800", weight: 4};
+                    return {color: "#f8d250", weight: 4};
                 case '5':
-                    return {color: "#5FE242", weight: 4};
+                    return {color: "#86a139", weight: 4};
             }
         },
         onEachFeature: onEachFeature
@@ -279,19 +320,24 @@
         let a = 0;
         var exit = document.getElementById('exit');
         var home = document.getElementById('home');
+        var person = document.getElementById('person')
+
 
         segmentButton.addEventListener("click", getRouteCoordinates);
         routeButton.addEventListener("click", getRouteNavigationCoordinates);
         exit.addEventListener("click", exitClick);
         home.addEventListener('click', goHome);
+        person.addEventListener('click', goToPerson)
 
         function exitClick() {
             location.reload()
-
         }
         function goHome() {
             const baseurl="{% url 'main' %}";
             window.location.replace(baseurl);
+        }
+        function goToPerson() {
+            window.location.replace('login/');
         }
 
          function getRouteCoordinates () {
@@ -299,14 +345,17 @@
              map.on('click', function (e){
                     count += 1;
                     console.log(e);
-                    gcs.reverse().latlng(e.latlng).run((err, res)=>{
+                    if(e.latlng){
+                        gcs.reverse().latlng(e.latlng).run((err, res)=>{
                         if(err) return;
-                        L.marker(res.latlng).addTo(map).bindPopup(res.address.Match_addr).openPopup();
+
                         if (count === 1){
+                            L.marker(res.latlng).addTo(map).bindPopup(res.address.Match_addr).openPopup();
                              start_lat =res.latlng['lat'];
                              start_lon =res.latlng['lng'];
                         }
                         else if(count===2){
+                            L.marker(res.latlng).addTo(map).bindPopup(res.address.Match_addr).openPopup();
                             end_lat =res.latlng['lat'];
                             end_lon =res.latlng['lng'];
                             const baseurl="{% url 'main' %}";
@@ -314,7 +363,13 @@
                             count=0;
                             window.location.replace(route_url);
                         }
+
                     });
+                    }
+                    else {
+                        console.log('e не найдено')
+                    }
+
              });
          }
 

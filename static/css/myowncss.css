@@ -1,5 +1,5 @@
 /*main*/
-{% load static %}
+/*{% load static %}*/
 .main {
     z-index: 1;
     overflow: hidden;
@@ -54,42 +54,49 @@
     margin-top: 150px;
 }
 .icon-img {
-    width: 50px;
+    width: 45px;
     background: white;
-
-    border-radius: 10px;
-    padding: 7px;
+    border-radius: 3px;
+    padding: 5px;
+}
+.person {
+    box-shadow: -1px 0px 6px rgba(0, 0, 0, 0.65);
+    margin-top: 20px;
+    border-radius: 3px;
+}
+.person :active {
+     box-shadow: inset 0 0 5px rgb(0 0 0 / 80%);
 }
 .home {
-    box-shadow: -1px 0px 11px;
+    box-shadow: -1px 0px 6px rgba(0, 0, 0, 0.65);
     margin-top: 20px;
-    border-radius: 10px;
+    border-radius: 3px;
 }
 .home :active{
     box-shadow: inset 0 0 5px rgb(0 0 0 / 80%);
 }
 .segment {
-    box-shadow: -1px 0px 11px;
+    box-shadow: -1px 0px 6px rgba(0, 0, 0, 0.65);
     margin-top: 20px;
-    border-radius: 10px;
+    border-radius: 3px;
 }
 .segment :active{
     box-shadow: inset 0 0 5px rgb(0 0 0 / 80%);
 
 }
 .route {
-    box-shadow: -1px 0px 11px;
+    box-shadow: -1px 0px 6px rgba(0, 0, 0, 0.65);
     margin-top: 20px;
-    border-radius: 10px;
+    border-radius: 3px;
 }
 .route :active{
     box-shadow: inset 0 0 5px rgb(0 0 0 / 80%);
 }
 .exit {
     display: none;
-    box-shadow: -1px 0px 11px;
+    box-shadow: -1px 0px 6px rgba(0, 0, 0, 0.65);
     margin-top: 20px;
-    border-radius: 10px;
+    border-radius: 3px;
 }
 .exit :active{
     box-shadow: inset 0 0 5px rgb(0 0 0 / 80%);
@@ -149,31 +156,31 @@
     padding-left: 10px;
 }
 .author {
-    font-size: 14pt;
+   font-size: 14pt;
     font-weight: bold;
-    color: #5a5a5a;
+    color: #a8612d;
     font-family: 'Roboto', sans-serif;
     margin-bottom: 5px;
     margin-top: 20px;
 }
 .author-score{
-     font-size: 12pt;
+     font-size: 11pt;
     font-weight: lighter;
     color: #5a5a5a;
     font-family: 'Roboto', sans-serif;
 }
 .type {
-    font-size: 12pt;
+    font-size: 11pt;
     font-weight: lighter;
     color: #5a5a5a;
     font-family: 'Roboto', sans-serif;
 }
 .description {
-    font-size: 12pt;
-    font-weight: normal;
+    font-size: 11pt;
+    font-weight: lighter;
     color: #5a5a5a;
     font-family: 'Roboto', sans-serif;
-    margin-top: 5px;
+    margin-top: 5px
 }
 .add-info {
     margin: 20px 10px 10px 10px;
@@ -183,17 +190,16 @@
     font-weight: normal;
     font-family: 'Roboto', sans-serif;
     transition: 0.2s;
-    background-color: #1396e2;
+    background-color: #d28751;
     color: #fff;
-    /*border-radius: 4px*/
+    width: 90%;
 }
 .add-info :hover {
-    background-color: #128dd4;
+    background-color: #b56c14;
 }
 .close {
-    width: 45px;
-    height: 45px;
-    border-radius: 10px;
+    width: 35px;
+    height: 35px;
     padding: 7px;
     position: absolute;
     right: 5px;
@@ -251,19 +257,20 @@
 }
 .str{
   display: inline-block;
-  width: 15px;
-  height: 15px;
-  background: url(http://cyberstatic.net/images/statusicon/user_offline.png)
-
+  width: 30px;
+  height: 30px;
+  background: url("/static/img/yellow-s.png");
+}
+.m {
+    margin-top:20px;
 }
 #star1:checked ~ .m :nth-child(1),
 #star2:checked ~ .m :nth-child(-n+2),
 #star3:checked ~ .m :nth-child(-n+3),
 #star4:checked ~ .m :nth-child(-n+4),
 #star5:checked ~ .m :nth-child(-n+5){
-  background:url(http://cyberstatic.net/images/statusicon/user_online.png)
+  background:url("/static/img/white-s.png")
 }
-
 
 /*GRADE FORM*/
 .grade-wrapper {
@@ -276,7 +283,7 @@
 .grade-box {
     position: fixed;
     transition: 0.4s;
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255,255,250, 0.6);
     top: 115px;
     left: 30px;
     max-width: 300px;
@@ -295,7 +302,7 @@
     font-family: 'Roboto', sans-serif;
 }
 .grade-element {
-    background-color: #073855;
+    background-color: #68904D;
     border: none;
     color: #fff;
     font-size: 14px;
@@ -308,16 +315,17 @@
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2) inset;
 }
 .element-wrapper :hover {
-    background-color: #062f47!important;
+    background-color: #f3d8c1!important;
+    color: #272323;
 }
 .grade-element :focus {
-    background-color: #062f47;
+    background-color: #68904D;
     -moz-box-shadow: 0px 1px 2px transparent, inset 0px 2px 2px rgba(0, 0, 0, 0.2);
-  -webkit-box-shadow: 0px 1px 2px transparent, inset 0px 2px 2px rgba(0, 0, 0, 0.2);
-  box-shadow: 0px 1px 2px transparent, inset 0px 2px 2px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0px 1px 2px transparent, inset 0px 2px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 1px 2px transparent, inset 0px 2px 2px rgba(0, 0, 0, 0.2);
 }
 .grade-element :active {
-    background-color: #062f47;
+    background-color: #68904D;
     -moz-box-shadow: 0px 1px 2px transparent, inset 0px 2px 2px rgba(0, 0, 0, 0.2);
   -webkit-box-shadow: 0px 1px 2px transparent, inset 0px 2px 2px rgba(0, 0, 0, 0.2);
   box-shadow: 0px 1px 2px transparent, inset 0px 2px 2px rgba(0, 0, 0, 0.2);
@@ -328,15 +336,15 @@
 }
 .grade-button {
   transition: 0.2s;
-  background-color: #1396e2;
-  color: #fff;
-  width: 100%;
-  height: 43px;
-  margin: 5px 0;
+    background-color: #E48716;
+    color: #fff;
+    width: 100%;
+    height: 43px;
+    margin: 5px 0;
     border: none;
 }
 .grade-button-wrapper :hover {
-     background-color: #128dd4;
+     background-color: #b56c14;
 }
 .reg-wrapper {
     display: flex;
@@ -388,6 +396,10 @@
 }
 .log-to-reg {
     text-align: center;
+}
+.link-reg{
+    text-decoration: none;
+    color: #555;
 }
 @media (max-width: 480px) {
     .info-wrapper {

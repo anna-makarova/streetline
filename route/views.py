@@ -63,8 +63,8 @@ def test_page(request):
 def showroute(request, lat_start, long_start, lat_stop, long_stop):
     global navigation_graph, map_graph
     if request.method == 'GET':
-        # _, coordinates = getroute.get_route(map_graph, long_start, lat_start, long_stop, lat_stop)
-        coordinates = json.loads(Segment.objects.all()[0].segment)
+        _, coordinates = getroute.get_route(map_graph, long_start, lat_start, long_stop, lat_stop)
+        # coordinates = json.loads(Segment.objects.all()[0].segment)
         context = {'coordinates': coordinates}
         return render(request, 'showroute.html', context)
 
@@ -106,8 +106,8 @@ def showroute(request, lat_start, long_start, lat_stop, long_stop):
 def navigation_page(request, lat_start, long_start, lat_stop, long_stop):
     global navigation_graph
     if request.method == 'GET':
-        # _, coordinates = getroute.get_route(navigation_graph, long_start, lat_start, long_stop, lat_stop)
-        coordinates = json.loads(Segment.objects.all()[0].segment)
+        _, coordinates = getroute.get_route(navigation_graph, long_start, lat_start, long_stop, lat_stop)
+        # coordinates = json.loads(Segment.objects.all()[0].segment)
         context = {'coordinates': coordinates}
         return render(request, 'navigation.html', context)
 
