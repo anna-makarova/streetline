@@ -36,11 +36,9 @@
         <div class="container-fluid">
             <div class="icon-wrapper">
                      <div class="icon">
-                         <img id="home" class="home" src="{% static "img/home.png"%}"  title="Домой" />
-                         <img id="segment" class="segment" src="{% static "img/009-star-1.png"%}" title="Добавить участок"/>
-                         <img id="route" class="route" src="{% static "img/002-route-1.png"%}"  title="Построить маршрут" />
-                         <img id="exit" class="exit" src="{% static "img/010-close-1.png"%}"  title="Закрыть" />
-{#                         <img id="loc" class="location" src="{% static "img/012-placeholder.png"%}"  title="Моё местоположение" />#}
+                          <div id="home" class="home">
+                            <img id="home" class="icon-img" src="{% static "img/home.png"%}"  title="Домой" />
+                         </div>
                      </div>
             </div>
         </div>
@@ -71,7 +69,10 @@
    </script>
 
     <script>
-      var map = L.map('map').setView([56.8,60.6], 15);
+     var lat = states[0]["geometry"]["coordinates"][0][1]
+     var lng = states[0]["geometry"]["coordinates"][0][0]
+
+      var map = L.map('map').setView([lat,lng], 14);
       data={};
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -83,5 +84,17 @@
       L.geoJSON(states).addTo(map);
 
     </script>
+    <script>
+        var lat1 = states[0]["geometry"]["coordinates"][0][1]
+        var lng1 = states[0]["geometry"]["coordinates"][0][0]
+        var length = states[0]["geometry"]["coordinates"].length
+        var lat2 = states[0]["geometry"]["coordinates"][length-1][1]
+        var lng2 = states[0]["geometry"]["coordinates"][length-1][0]
+
+        var marker1 = L.marker([lat1, lng1]).addTo(map)
+        var marker2 = L.marker([lat2, lng2]).addTo(map)
+    </script>
+
+
 </body>
 </html>

@@ -4,6 +4,9 @@
     z-index: 1;
     overflow: hidden;
 }
+.container-fluid {
+    overflow: hidden;
+}
 
 /*HEADER*/
 
@@ -250,7 +253,7 @@
   display: inline-block;
   width: 15px;
   height: 15px;
-  background: url(https://cdn-icons-png.flaticon.com/512/16/16666.png)
+  background: url(http://cyberstatic.net/images/statusicon/user_offline.png)
 
 }
 #star1:checked ~ .m :nth-child(1),
@@ -335,6 +338,57 @@
 .grade-button-wrapper :hover {
      background-color: #128dd4;
 }
+.reg-wrapper {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    height: 100vh;
+    flex-direction: row;
+    justify-content: center;
+    overflow: hidden;
+}
+.img-wrapper {
+    flex-basis: 400px;
+    overflow: hidden;
+}
+.reg-img {
+    width:100%
+}
+.form-wrapper {
+    flex-basis: 400px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+.log-input {
+    border: 1px solid #e6e6e6;
+    padding: 10px;
+    font-size: 18px;
+    color: #666;
+    margin: 10px 0px 10px 10px;
+    width: 95%;
+}
+.log-submit {
+    transition: 0.2s;
+    background-color:  	#d28751;
+    color: #fff;
+    width: 95%;
+    height: 43px;
+    border: none;
+    margin: 10px 0px 10px 10px;
+    border-radius: 2.5px;
+}
+.log-maintext {
+    margin: 0px 0px 5px 0px;
+    text-align: center;
+    font-size: 20px;
+    color: #555;
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.log-to-reg {
+    text-align: center;
+}
 @media (max-width: 480px) {
     .info-wrapper {
 
@@ -380,5 +434,11 @@
         padding: 10px;
         width: 100vw;
     }
+}
+@media (max-width: 800px) {
+    .img-wrapper {
+        width: 0px;
+        flex-basis: 0px;
 
+    }
 }
