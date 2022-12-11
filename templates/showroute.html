@@ -24,7 +24,7 @@
     #map { position: absolute; top:0; bottom:0; right:0; left:0; }
   </style>
 
-
+{% if request.user.is_authenticated %}
 <body class="page-homepage map-osm" id="page-top" data-spy="scroll" data-target=".navigation" data-offset="90">
     <div class="header">
         <nav class="">
@@ -143,5 +143,8 @@
         }
     </script>
 </body>
+{% else %}
+    <p>Вы не зарегистрированы</p>
+{% endif %}
 </html>
 
