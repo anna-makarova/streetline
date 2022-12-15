@@ -36,8 +36,8 @@
                                           <input type="submit" class="log-submit" name="authenticate_user" value="Войти">
                                         </div>
                                     </form>
-                                    <div class="log-to-reg">
-                                        <a href="register.html" class="link-reg">Зарегистрироваться</a>
+                                    <div class="log-to-reg" id="log-to-reg">
+                                        Зарегистрироваться
                                     </div>
                                 </div>
                             </div>
@@ -48,4 +48,14 @@
     </div>
 
 </body>
+    <script>
+        var regLink = document.getElementById('log-to-reg')
+        regLink.addEventListener("click", goToReg);
+
+        function goToReg() {
+            const baseurl="{% url 'main' %}";
+            window.location.replace(baseurl + 'register/');
+        }
+
+    </script>
 </html>

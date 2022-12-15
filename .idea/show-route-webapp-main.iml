@@ -30,6 +30,8 @@
     <orderEntry type="library" name="esri-leaflet-geocoder" level="application" />
     <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="leaflet-control-geocoder" level="application" />
+    <orderEntry type="library" name="leaflet.locatecontrol" level="application" />
+    <orderEntry type="library" name="esri-leaflet-vector" level="application" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="format" value="PLAIN" />

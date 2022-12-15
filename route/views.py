@@ -4,7 +4,6 @@ import json
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-
 from . import getroute, api
 from .forms import CreateUserForm
 from .models import Segment, Description
