@@ -17,19 +17,17 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
-     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-
+{#    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />#}
+{#    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>#}
     <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js" integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ==" crossorigin=""></script>
 
   <!-- Load Esri Leaflet Geocoder from CDN -->
-  <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.css"
+    <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.css"
     integrity="sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g=="
     crossorigin="">
-  <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js"
+    <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js"
     integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA=="
     crossorigin=""></script>
-    <script src="https://unpkg.com/esri-leaflet-vector@4.0.0/dist/esri-leaflet-vector.js"></script>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
@@ -41,17 +39,17 @@
     <div class="main">
         <div class="wrapper">
             <div class="container-fluid">
-{#                <div class="row">#}
-{#                    <div class="col-md-12">#}
-{#                        <div class="formBlock">#}
-{#                            <form id="form">#}
-{#                                <input type="text" name="start" class="input" id="start" placeholder="Choose starting point" />#}
-{#                                <input type="text" name="end" class="input" id="destination" placeholder="Choose starting point" />#}
-{#                                <button type="submit">Get Directions</button>#}
-{#                            </form>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="formBlock">
+                            <form id="form">
+                                <input type="text" name="start" class="input" id="start" placeholder="Choose starting point" />
+                                <input type="text" name="end" class="input" id="destination" placeholder="Choose starting point" />
+                                <button type="submit">Get Directions</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-3">
                         <div class="info-wrapper" id="info-wrapper">
@@ -88,6 +86,7 @@
                                         <div class="review-wrapper" id="reviews-container">
                                             <div class="review" id="review-template" style="display: none">
                                                 <p class="author"></p>
+                                                <p class="date">15.21.2022</p>
                                                 <div class="author-score">Тип: </div>
                                                 <div class="type"></div>
                                                 <div class="description"></div>
@@ -132,9 +131,27 @@
 
     </div>
 
-<!--получение данных о сегменте с бэка-->
+<!--ОТРИСОВКА КАРТЫ --------------------------------------------------------------------------------------------------->
     <script>
-            let states = [
+      var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom:19,
+          attribution: "&copy; <a href=\"https://osm.org/copyright\">OpenStreetMap</a> contributors"
+      });
+
+      var map = L.map('map', {
+          center: [56.838011,60.597465],
+          zoom: 14,
+          layers: [osm]
+
+      });
+
+
+
+    </script>
+
+<!--ПОЛУЧЕНИЕ ДАННЫХ О СЕГМЕНТЕ --------------------------------------------------------------------------------------->
+    <script>
+        let states = [
                 {% for index, segment, score, description in segments %}
                 {
                     "type": "Feature",
@@ -158,23 +175,11 @@
                     }
                 },
             {% endfor %}
-            ];
-    </script>
-<!--отрисовка базовой карты-->
-    <script>
-      var map = L.map('map').setView([56.838011,60.597465], 13);
-      map.zoomControl.setPosition('topright');
-      data={};
-
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: "&copy; <a href=\"https://osm.org/copyright\">OpenStreetMap</a> contributors"
-      }
-      ).addTo(map);
-      L.control.locate().setPosition('topright').addTo(map);
-
+        ];
     </script>
 
-<!--отрисовка сегментов-->
+
+<!--ОТРИСОВКА СЕГМЕНТОВ ----------------------------------------------------------------------------------------------->
     <script>
       var marks = document.getElementById('marks');
       var segment = 0;
@@ -226,37 +231,44 @@
                   reviewsContainer.append(reviewView)
               }
           });
+
       }
-
-
-      let close = document.getElementById('close');
-
-      close.addEventListener("click", closeClick);
-       function closeClick() {
-          document.getElementById('info-wrapper').style.display = 'none';
-       };
-
-      L.geoJSON(states, {
+{##006400#}
+       var dataLayer = L.geoJSON(states, {
         style: function(feature) {
             switch (feature.properties.mean_score) {
                 case '1':
                     return {color: "#741717", weight: 4};
                 case '2':
-                    return {color: "#ec2c25", weight: 4};
+                    return {color: "#B22222", weight: 4};
                 case '3':
-                    return {color: "#f78f23", weight: 4};
+                    return {color: "#FF8C00", weight: 4};
                 case '4':
-                    return {color: "#f8d250", weight: 4};
+                    return {color: "#FFD700", weight: 4};
                 case '5':
-                    return {color: "#86a139", weight: 4};
+                    return {color: "#2E8B57", weight: 4};
             }
         },
         onEachFeature: onEachFeature
       }).addTo(map);
+      var baseMaps = {
+    "OpenStreetMap": osm
+
+    };
+
+    var overlayMaps = {
+    "Quality": dataLayer
+    };
+
+
+      map.zoomControl.setPosition('topright');
+      L.control.locate().setPosition('topright').addTo(map);
+
+      var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
     </script>
 
 
-<!--переход на showroute на добавление информации о существующем участке-->
+<!--ДОБАВЛЕНИЕ ИНФО О СУЩЕСТВУЮЩЕМ УЧАСТКЕ С ПЕРЕХОДОМ НА SHOWROUTE---------------------------------------------------->
     <script>
         var infoButton = document.getElementById('add-info');
         infoButton.onclick = function (e) {
@@ -267,10 +279,10 @@
         }
     </script>
 
-    <!--переход на showroute и навигацию по новым двум точкам-->
+    <!--ПЕРЕХОД НА SHOWROUTE/НАВИГАЦИЮ-->
     <script>
         var segmentButton = document.getElementById('segment');
-        var routeButton = document.getElementById('route')
+        var routeButton = document.getElementById('route');
         var gcs = L.esri.Geocoding.geocodeService();
         var count=0;
         var start_lat = 0;
@@ -278,19 +290,24 @@
         var end_lat = 0;
         var end_lon = 0;
         let a = 0;
+        <!--переменные кнопок -->
         var exit = document.getElementById('exit');
         var home = document.getElementById('home');
-        var person = document.getElementById('person')
-
+        var person = document.getElementById('person');
+        let close = document.getElementById('close');
 
         segmentButton.addEventListener("click", getRouteCoordinates);
         routeButton.addEventListener("click", getRouteNavigationCoordinates);
         exit.addEventListener("click", exitClick);
         home.addEventListener('click', goHome);
-        person.addEventListener('click', goToPerson)
+        person.addEventListener('click', goToPerson);
+        close.addEventListener("click", closeClick);
 
+        function closeClick() {
+          document.getElementById('info-wrapper').style.display = 'none';
+        }
         function exitClick() {
-            location.reload()
+            location.reload();
         }
         function goHome() {
             const baseurl="{% url 'main' %}";
@@ -300,12 +317,13 @@
             window.location.replace('login/');
         }
 
+        <!--маршрут и переход на showroute-->
          function getRouteCoordinates () {
             exit.style.display = 'block';
              map.on('click', function (e){
-                    count += 1;
-                    console.log(e);
-                    if(e.latlng){
+                 count += 1;
+                 console.log(e);
+                 if(e.latlng){
                         gcs.reverse().latlng(e.latlng).run((err, res)=>{
                         if(err) return;
                         if (count === 1){
@@ -330,7 +348,7 @@
              });
          }
 
-
+<!--маршрут и переход на навигацию-->
          function getRouteNavigationCoordinates () {
             exit.style.display = 'block';
             map.on('click', function (e){
@@ -361,165 +379,5 @@
             });
          }
     </script>
-{#    <script>#}
-{#        function runDirection(start, end) {#}
-{##}
-{#        // recreating new map layer after removal#}
-{#        map = L.map('map', {#}
-{#            center: [56.838011,60.597465],#}
-{#            zoom: 12#}
-{#        });#}
-{##}
-{#        var geocoder = L.Control.Geocoder.nominatim();#}
-{#      if (typeof URLSearchParams !== 'undefined' && location.search) {#}
-{#        // parse /?geocoder=nominatim from URL#}
-{#        var params = new URLSearchParams(location.search);#}
-{#        var geocoderString = params.get('geocoder');#}
-{#        if (geocoderString && L.Control.Geocoder[geocoderString]) {#}
-{#          console.log('Using geocoder', geocoderString);#}
-{#          geocoder = L.Control.Geocoder[geocoderString]();#}
-{#        } else if (geocoderString) {#}
-{#          console.warn('Unsupported geocoder', geocoderString);#}
-{#        }#}
-{#      }#}
-{##}
-{#      var marker3 = L.marker(location.latLng)#}
-{#      var marker4 = L.marker(location.latLng)#}
-{##}
-{#      var layerGroup = L.layerGroup([marker3, marker4]);#}
-{#      layerGroup.addTo(map);#}
-{#    }#}
-{##}
-{##}
-{#// function that runs when form submitted#}
-{#function submitForm(event) {#}
-{#    event.preventDefault();#}
-{##}
-{#    // delete current map layer#}
-{#    map.remove();#}
-{##}
-{#    // getting form data#}
-{#    start = document.getElementById("start").value;#}
-{#    end = document.getElementById("destination").value;#}
-{##}
-{#    // run directions function#}
-{#    runDirection(start, end);#}
-{##}
-{#    // reset form#}
-{#    document.getElementById("form").reset();#}
-
-{##}
-{#// asign the form to form variable#}
-{#const form = document.getElementById('form');#}
-{##}
-{#// call the submitForm() function when submitting the form#}
-{#form.addEventListener('submit', submitForm);#}
-{#    </script>#}
-
-     <script>
-      var map = L.map('map').setView([56.838011,60.597465], 13);
-
-      var geocoder = L.Control.Geocoder.nominatim();
-      if (typeof URLSearchParams !== 'undefined' && location.search) {
-        // parse /?geocoder=nominatim from URL
-        var params = new URLSearchParams(location.search);
-        var geocoderString = params.get('geocoder');
-        if (geocoderString && L.Control.Geocoder[geocoderString]) {
-          console.log('Using geocoder', geocoderString);
-          geocoder = L.Control.Geocoder[geocoderString]();
-        } else if (geocoderString) {
-          console.warn('Unsupported geocoder', geocoderString);
-        }
-      }
-      console.log(params, geocoderString)
-
-      var control = L.Control.geocoder({
-        placeholder: 'Search here...',
-        geocoder: geocoder
-      }).addTo(map);
-      var marker;
-
-
-      L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(map);
-
-      map.on('click', function(e) {
-        geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function(results) {
-          var r = results[0];
-          if (r) {
-            if (marker) {
-              marker
-                .setLatLng(r.center)
-                .setPopupContent(r.html || r.name)
-                .openPopup();
-            } else {
-              marker = L.marker(r.center)
-                .bindPopup(r.name)
-                .addTo(map)
-                .openPopup();
-            }
-          }
-        });
-      });
-    </script>
-
-{# <script>#}
-{##}
-{#      const apiKey = "AAPKd3a3ab1d55e544a18bec5eab898bc6aftuScM3a7k2NC36Qu1oBk8TVaSQC1pwIZ-JTgDpwZ6C2KQGdK5r2niVru3q1KDxY_";#}
-{##}
-{##}
-{##}
-      {#const map = L.map("map", {#}
-      {#  minZoom: 2#}
-{##}
-{#      map.setView([56.838011,60.597465], 14); // Sydney#}
-{##}
-      {#L.esri.Vector.vectorBasemapLayer(basemapEnum, {#}
-      {#  apiKey: apiKey#}
-{##}
-{##}
-{#      const searchControl = L.esri.Geocoding.geosearch({#}
-{#        position: "topright",#}
-{#        placeholder: "Enter an address or place e.g. 1 York St",#}
-{#        useMapBounds: false,#}
-{##}
-{#        providers: [#}
-{#          L.esri.Geocoding.arcgisOnlineProvider({#}
-{#            apikey: apiKey,#}
-{#              nearby: {#}
-{#              lat: 56.838011,#}
-{#              lng: 60.597465#}
-{#            }#}
-{#          })#}
-{#        ]#}
-{##}
-{#      }).addTo(map);#}
-{##}
-{#      const results = L.layerGroup().addTo(map);#}
-{##}
-{#      searchControl.on("results", (data) => {#}
-{#        results.clearLayers();#}
-{##}
-{#        for (let i = data.results.length - 1; i >= 0; i--) {#}
-{#          const marker = L.marker(data.results[i].latlng);#}
-{##}
-{#          const lngLatString = `${Math.round(data.results[i].latlng.lng * 100000) / 100000}, ${#}
-{#            Math.round(data.results[i].latlng.lat * 100000) / 100000#}
-{#          }`;#}
-{#          marker.bindPopup(`<b>${lngLatString}</b><p>${data.results[i].properties.LongLabel}</p>`);#}
-{##}
-{#          results.addLayer(marker);#}
-{##}
-{#          marker.openPopup();#}
-{##}
-{#        }#}
-{##}
-{#      });#}
-{##}
-{#    </script>#}
-
-
-
 </body>
 </html>

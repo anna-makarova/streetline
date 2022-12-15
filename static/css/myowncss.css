@@ -163,6 +163,12 @@
     margin-bottom: 5px;
     margin-top: 20px;
 }
+.date {
+    font-size: 11pt;
+    font-weight: lighter;
+    color: #5a5a5a;
+    font-family: 'Roboto', sans-serif;
+}
 .author-score{
      font-size: 11pt;
     font-weight: lighter;
@@ -347,6 +353,10 @@ input:nth-child(1) {
     transition: 0.3s;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2) inset;
 }
+input:nth-child(1) ::placeholder {
+    background-color: #68904D;
+    color: #fff;
+}
 .element-wrapper :hover {
     background-color: #f3d8c1!important;
     color: #272323;
@@ -380,17 +390,27 @@ input:nth-child(1) {
      background-color: #b56c14;
 }
 /*REGISTRATION LOGIN*/
+.logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+.logo-img {
+    width: 70px;
+    margin-top: 10px;
+}
+
 .reg-wrapper {
     display: flex;
     align-items: center;
     justify-items: center;
-    height: 100vh;
+    height: 80vh;
     flex-direction: row;
     justify-content: center;
     overflow: hidden;
 }
 .img-wrapper {
-    flex-basis: 400px;
+    flex-basis: 300px;
     overflow: hidden;
 }
 .reg-img {

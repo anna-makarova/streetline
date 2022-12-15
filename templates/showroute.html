@@ -110,9 +110,7 @@
         attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map);
 
-
       L.geoJSON(states).addTo(map);
-
     </script>
 
     <script>
@@ -138,7 +136,8 @@
         }
 
         function goToPerson() {
-            window.location.replace('login/');
+            const baseurl="{% url 'main' %}";
+            window.location.replace(baseurl + 'login/')
         }
     </script>
 </body>

@@ -77,7 +77,8 @@
         }
 
         function goToPerson() {
-            window.location.replace('login/');
+            const baseurl="{% url 'main' %}";
+            window.location.replace(baseurl + 'login/')
         }
    </script>
 
@@ -95,7 +96,7 @@
 
       }
       L.geoJSON(states).addTo(map);
-      L.Control.geocoder().addTo(map);
+
 
     </script>
     <script>
