@@ -20,3 +20,4 @@ class Description(models.Model):
     score = models.IntegerField()
     type = models.CharField(max_length=100)
     comment = models.CharField(max_length=400)
+    date = models.DateField(auto_now=False, auto_now_add=False)

@@ -87,7 +87,7 @@
                                         <div class="review-wrapper" id="reviews-container">
                                             <div class="review" id="review-template" style="display: none">
                                                 <p class="author"></p>
-                                                <p class="date">15.21.2022</p>
+                                                <p class="date"></p>
                                                 <div class="author-score">Тип: </div>
                                                 <div class="type"></div>
                                                 <div class="description"></div>
@@ -160,12 +160,13 @@
                     "properties":{
                             "mean_score":"{{ score }}",
                             "test": [
-                    {% for description_score, description_type, description_comment, description_user in description %}
+                    {% for description_score, description_type, description_comment, description_user, description_date in description %}
                         {
                             "score": "{{ description_score }}",
                             "type": "{{ description_type }}",
                             "description": "{{ description_comment }}",
                             "author": "{{ description_user }}",
+                            "date" : {{ description_date }},
                         },
                     {% endfor %}
                     ],
@@ -224,8 +225,10 @@
                   const authorScore = reviewView.querySelector('.author-score');
                   const type = reviewView.querySelector('.type');
                   const description = reviewView.querySelector('.description');
+                  const date = reviewView.querySelector('.date');
                   author.innerText = commentModel.author;
                   authorScore.innerText = 'Оценка: ' + commentModel.score;
+                  date.innerText = 'Дата: ' + commentModel.date;
                   type.innerText = 'Тип: ' + commentModel.type;
                   description.innerText = commentModel.description;
                   // вставляем его в дом

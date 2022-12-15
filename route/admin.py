@@ -9,5 +9,5 @@ class Segment(admin.ModelAdmin):
 
 @admin.register(Description)
 class Segment(admin.ModelAdmin):
-    list_display = ['score', 'type', 'creator']
+    list_display = ['score', 'type', 'creator', 'date']
     list_filter = ['creator', 'type']

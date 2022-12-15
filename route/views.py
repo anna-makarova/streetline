@@ -1,6 +1,6 @@
 import json
 
-
+from datetime import date
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
@@ -43,14 +43,14 @@ def main_map(request):
         for i, segment in zip(range(len(segments)), segments):
             relevant_descriptions = Description.objects.filter(segment=segment)[:10]
             segment_list.append((i, segment.segment, segment.mean_score, \
-                                 [[description.score, description.type, description.comment, description.creator] for description in relevant_descriptions]))
+                                 [[description.score, description.type, description.comment, description.creator, description.date] for description in relevant_descriptions]))
         context = {'segments': segment_list}
         return render(request, 'main-map.html', context)
     elif request.method == 'POST':
         starting_address = request.POST.get('start')
         ending_address = request.POST.get('end')
-        start_coordinates = tranlate_address(starting_address)
-        end_coordinates = tranlate_address(ending_address)
+        start_coordinates = translate_address(starting_address)
+        end_coordinates = translate_address(ending_address)
         return redirect(f'/navigation/{start_coordinates},{end_coordinates}')
 
 def test_page(request):
@@ -65,17 +65,29 @@ def showroute(request, lat_start, long_start, lat_stop, long_stop):
         return render(request, 'showroute.html', context)
 
     elif request.method == 'POST' and 'add_to_db_form' in request.POST:
-        score = int(request.POST.get('score')) # достаем данные из формы и приводим к нужным типам
+        #score = int(request.POST.get('score')) # достаем данные из формы и приводим к нужным типам
         #user = User.objects.all()[0]
-        type_dict = {
-            "0": 'Хорошая дорога',
-            "1": 'Брусчатка',
-            "2": 'Ямы',
-            "3": 'Поребрики',
-            "4": 'Ливневка'
+        scores = {
+            1: request.POST.get('score_1'),
+            2: request.POST.get('score_2'),
+            3: request.POST.get('score_3'),
+            4: request.POST.get('score_4'),
+            5: request.POST.get('score_5')
         }
+        print(scores)
+        score = [key for key in scores.keys() if scores[key] != None][0]
 
-        type = type_dict[request.POST.get('type')]
+        types = {
+            'Хорошая дорога': request.POST.get('Хорошая дорога'),
+            'Брусчатка': request.POST.get('Брусчатка'),
+            'Ямы': request.POST.get('Ямы'),
+            'Поребрики': request.POST.get('Поребрики'),
+            'Ливневка': request.POST.get('Ливневка'),
+        }
+        print(types)
+        type = ', '.join([key for key in types.keys() if types[key] != None])
+        print(type, score)
+        #type = type_dict[request.POST.get('type')]
         comment = request.POST.get('comment')
         if comment == None:
             comment = ''
@@ -108,10 +120,10 @@ def save_segment(path, user, score):
 
 
 def save_description(segment, user, score, type, comment):
-    description_object = Description(segment=segment, creator=user, score=score, type=type, comment=comment)
+    description_object = Description(segment=segment, creator=user, score=score, type=type, comment=comment, date=date.today())
     description_object.save()
 
-def tranlate_address(address):
+def translate_address(address):
     url = f'https://geocode-maps.yandex.ru/1.x/?apikey=03d8d000-854f-4bfa-88af-980bfbdd108f&geocode=Eкатеринбург,+{address.replace(" ", "+")}'
     response = requests.get(url).text
     position = BeautifulSoup(response).find('pos').text.split()
