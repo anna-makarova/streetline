@@ -19,6 +19,13 @@
             <div class="wrapper">
                 <div class="container-fluid">
                     <div class="row">
+                        <div class="col-sm-12">
+                            <div id="logo" class="logo">
+                             <img class="logo-img" src="{% static "img/logo.png"%}"  title="На главную" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-12">
                             <div class="reg-wrapper">
                                 <div class="img-wrapper">
@@ -55,6 +62,14 @@
         function goToReg() {
             const baseurl="{% url 'main' %}";
             window.location.replace(baseurl + 'register/');
+        }
+
+        var logo = document.getElementById('logo')
+        logo.addEventListener('click', goHome);
+
+        function goHome() {
+                const baseurl="{% url 'main' %}";
+                window.location.replace(baseurl);
         }
 
     </script>

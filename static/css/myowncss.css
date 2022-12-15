@@ -299,8 +299,22 @@
 .input {
     padding: 10px;
     width: 100%;
-    border: 1px solid #ddd;
+    border: none;
     font-size: 15px;
+    border-radius: 3px;
+    background: #ddd;
+}
+.nav-submit {
+    margin: 15px 10px 10px 1px;
+    border: none;
+    padding: 5px;
+    font-size: 14pt;
+    font-weight: normal;
+    font-family: 'Roboto', sans-serif;
+    transition: 0.2s;
+    background-color: #d28751;
+    color: #fff;
+    width: 100%;
     border-radius: 3px;
 }
 
@@ -394,10 +408,13 @@ input:nth-child(1) ::placeholder {
     display: flex;
     flex-direction: row;
     justify-content: end;
+    margin: 0px -11px 0px -12px;
+    box-shadow: 0px 0px 6px 1px rgb(0 0 10 / 30%);
 }
 .logo-img {
     width: 70px;
     margin-top: 10px;
+    margin-right: 5px;
 }
 
 .reg-wrapper {
@@ -450,6 +467,12 @@ input:nth-child(1) ::placeholder {
 }
 .log-to-reg {
     text-align: center;
+}
+.log-to-reg :hover{
+    color: darkred;
+}
+.log-to-reg :active {
+    color: #1b1b1b;
 }
 .link-reg{
     text-decoration: none;

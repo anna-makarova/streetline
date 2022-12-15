@@ -42,10 +42,11 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="formBlock">
-                            <form id="form">
-                                <input type="text" name="start" class="input" id="start" placeholder="Choose starting point" />
-                                <input type="text" name="end" class="input" id="destination" placeholder="Choose starting point" />
-                                <button type="submit">Get Directions</button>
+                            <form id="form" method="post">
+                                {% csrf_token %}
+                                <input type="text" name="start" class="input" id="start" placeholder="Откуда" />
+                                <input type="text" name="end" class="input" id="destination" placeholder="Куда" />
+                                <button type="submit" class="nav-submit" >Go</button>
                             </form>
                         </div>
                     </div>
@@ -62,11 +63,11 @@
                                                 <h1 id="marks"></h1>
                                             </div>
                                             <div class="rating-result"  id="m">
-                                                <input type="radio" id="star1" name="stars" class="star-check">
-                                                <input type="radio" id="star2" name="stars" class="star-check">
-                                                <input type="radio" id="star3" name="stars" class="star-check">
-                                                <input type="radio" id="star4" name="stars" class="star-check">
-                                                <input type="radio" id="star5" name="stars" class="star-check">
+                                                <input type="radio" id="star1" name="1" class="star-check">
+                                                <input type="radio" id="star2" name="2" class="star-check">
+                                                <input type="radio" id="star3" name="3" class="star-check">
+                                                <input type="radio" id="star4" name="4" class="star-check">
+                                                <input type="radio" id="star5" name="5" class="star-check">
                                                 <div class="m" >
                                                   <label for="star1" class="str"></label>
                                                   <label for="star2" class="str"></label>

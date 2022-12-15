@@ -40,6 +40,20 @@
                                     {% csrf_token %}
                                     <div class="title">Оцените качество дороги</div>
                                     <div class="element-wrapper">
+                                        <div class="rating-result"  id="m">
+                                                <input type="radio" id="star1" name="stars" class="star-check">
+                                                <input type="radio" id="star2" name="stars" class="star-check">
+                                                <input type="radio" id="star3" name="stars" class="star-check">
+                                                <input type="radio" id="star4" name="stars" class="star-check">
+                                                <input type="radio" id="star5" name="stars" class="star-check">
+                                                <div class="m" >
+                                                  <label for="star1" class="str"></label>
+                                                  <label for="star2" class="str"></label>
+                                                  <label for="star3" class="str"></label>
+                                                  <label for="star4" class="str"></label>
+                                                  <label for="star5" class="str"></label>
+                                                </div>
+                                            </div>
                                         <select name="score" class="grade-element">
                                                     <option class="element-option" value="">Оценка</option>
                                                     <option class="element-option" value="1">1</option>
@@ -50,14 +64,38 @@
                                         </select>
                                     </div><!-- /.form-group -->
                                     <div class="element-wrapper">
-                                        <select name="type" class="grade-element">
-                                                    <option class="element-option" value="">Тип</option>
-                                                    <option class="element-option" value="0">Хорошая дорога</option>
-                                                    <option class="element-option" value="1">Брусчатка</option>
-                                                    <option class="element-option" value="2">Ямы</option>
-                                                    <option class="element-option" value="3">Поребрики</option>
-                                                    <option class="element-option" value="4">Ливневка</option>
-                                        </select>
+
+                                          <label>
+                                            <input type="checkbox" name="Хорошая дорога">
+                                            Хорошая дорога
+                                          </label>
+                                          <br>
+                                          <label>
+                                            <input type="checkbox" name="Брусчатка">
+                                            Брусчатка
+                                          </label>
+                                          <br>
+                                          <label>
+                                            <input type="checkbox" name="Ямы">
+                                            Ямы
+                                          </label>
+                                        <label>
+                                            <input type="checkbox" name="Поребрики">
+                                            Поребрики
+                                          </label>
+                                        <label>
+                                            <input type="checkbox" name="Ливневки">
+                                            Ливневки
+                                          </label>
+
+{#                                        <select name="type" class="grade-element">#}
+{#                                                    <option class="element-option" value="">Тип</option>#}
+{#                                                    <option class="element-option" value="0">Хорошая дорога</option>#}
+{#                                                    <option class="element-option" value="1">Брусчатка</option>#}
+{#                                                    <option class="element-option" value="2">Ямы</option>#}
+{#                                                    <option class="element-option" value="3">Поребрики</option>#}
+{#                                                    <option class="element-option" value="4">Ливневка</option>#}
+{#                                        </select>#}
                                     </div><!-- /.form-group -->
                                     <div class="element-wrapper">
                                         <input name="comment" type="text" class="grade-element" id="search-box-property-info" placeholder="Комментарий">

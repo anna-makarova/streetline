@@ -7,6 +7,8 @@ from django.shortcuts import render, redirect
 from . import getroute, api
 from .forms import CreateUserForm
 from .models import Segment, Description
+import requests
+from bs4 import BeautifulSoup
 
 def register_page(request):
     if request.method == 'GET':
@@ -44,6 +46,12 @@ def main_map(request):
                                  [[description.score, description.type, description.comment, description.creator] for description in relevant_descriptions]))
         context = {'segments': segment_list}
         return render(request, 'main-map.html', context)
+    elif request.method == 'POST':
+        starting_address = request.POST.get('start')
+        ending_address = request.POST.get('end')
+        start_coordinates = tranlate_address(starting_address)
+        end_coordinates = tranlate_address(ending_address)
+        return redirect(f'/navigation/{start_coordinates},{end_coordinates}')
 
 def test_page(request):
     return render(request, 'test.html')
@@ -103,6 +111,12 @@ def save_description(segment, user, score, type, comment):
     description_object = Description(segment=segment, creator=user, score=score, type=type, comment=comment)
     description_object.save()
 
+def tranlate_address(address):
+    url = f'https://geocode-maps.yandex.ru/1.x/?apikey=03d8d000-854f-4bfa-88af-980bfbdd108f&geocode=Eкатеринбург,+{address.replace(" ", "+")}'
+    response = requests.get(url).text
+    position = BeautifulSoup(response).find('pos').text.split()
+    position.reverse()
+    return ','.join(position)
 
 
 # API
