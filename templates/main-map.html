@@ -40,20 +40,22 @@
         <div class="wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
-                        <div class="formBlock">
-                            <form id="form" method="post">
-                                {% csrf_token %}
-                                <input type="text" name="start" class="input" id="start" placeholder="Откуда" />
-                                <input type="text" name="end" class="input" id="destination" placeholder="Куда" />
-                                <button type="submit" class="nav-submit" >Go</button>
-                            </form>
+                    <div class="col-md-3">
+                        <div class="formBlock" id="formBlock">
+                                <form id="form" method="post">
+                                    {% csrf_token %}
+                                    <input type="text" name="start" class="input" id="start" placeholder="Откуда" />
+                                    <input type="text" name="end" class="input" id="destination" placeholder="Куда" />
+                                    <button type="submit" class="nav-submit" >Go</button>
+                                </form>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">
-                        <div class="info-wrapper" id="info-wrapper">
+                        <div class="left-wrapper">
+
+                            <div class="info-wrapper" id="info-wrapper">
                             <div class="info-box">
                                 <img id="close" class="close" src="{% static "img/crosses.jpg"%}"  title="Закрыть" />
                                 <div class="row">
@@ -63,11 +65,11 @@
                                                 <h1 id="marks"></h1>
                                             </div>
                                             <div class="rating-result"  id="m">
-                                                <input type="radio" id="star1" name="1" class="star-check">
-                                                <input type="radio" id="star2" name="2" class="star-check">
-                                                <input type="radio" id="star3" name="3" class="star-check">
-                                                <input type="radio" id="star4" name="4" class="star-check">
-                                                <input type="radio" id="star5" name="5" class="star-check">
+                                                <input type="radio" id="star1" name="stars" class="star-check">
+                                                <input type="radio" id="star2" name="stars" class="star-check">
+                                                <input type="radio" id="star3" name="stars" class="star-check">
+                                                <input type="radio" id="star4" name="stars" class="star-check">
+                                                <input type="radio" id="star5" name="stars" class="star-check">
                                                 <div class="m" >
                                                   <label for="star1" class="str"></label>
                                                   <label for="star2" class="str"></label>
@@ -88,7 +90,7 @@
                                             <div class="review" id="review-template" style="display: none">
                                                 <p class="author"></p>
                                                 <p class="date"></p>
-                                                <div class="author-score">Тип: </div>
+                                                <div class="author-score"></div>
                                                 <div class="type"></div>
                                                 <div class="description"></div>
                                             </div>
@@ -104,10 +106,12 @@
                                 </div>
                             </div>
                         </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="icon-wrapper">
-                     <div class="icon">
+                     <div class="icon" id="icon">
                          <div id="person" class="person">
                              <img class="icon-img" src="{% static "img/person.jpg"%}"  title="Войти" />
                          </div>
@@ -166,7 +170,7 @@
                             "type": "{{ description_type }}",
                             "description": "{{ description_comment }}",
                             "author": "{{ description_user }}",
-                            "date" : {{ description_date }},
+                            "date" : "{{ description_date }}",
                         },
                     {% endfor %}
                     ],
@@ -192,6 +196,7 @@
           layer.on('click', function (e) {
               // make visible
               document.getElementById('info-wrapper').style.display = 'block';
+              formBlock.style.display = 'none';
 
               // mean score at top
               marks.innerText = e.target.feature.properties.mean_score;
@@ -228,7 +233,7 @@
                   const date = reviewView.querySelector('.date');
                   author.innerText = commentModel.author;
                   authorScore.innerText = 'Оценка: ' + commentModel.score;
-                  date.innerText = 'Дата: ' + commentModel.date;
+                  date.innerText = commentModel.date;
                   type.innerText = 'Тип: ' + commentModel.type;
                   description.innerText = commentModel.description;
                   // вставляем его в дом
@@ -237,7 +242,7 @@
           });
 
       }
-{##006400#}
+
        var dataLayer = L.geoJSON(states, {
         style: function(feature) {
             switch (feature.properties.mean_score) {
@@ -299,6 +304,10 @@
         var home = document.getElementById('home');
         var person = document.getElementById('person');
         let close = document.getElementById('close');
+        let start = document.getElementById('start');
+        let destination = document.getElementById('destination');
+        let formBlock = document.getElementById('formBlock');
+
 
         segmentButton.addEventListener("click", getRouteCoordinates);
         routeButton.addEventListener("click", getRouteNavigationCoordinates);
@@ -332,8 +341,10 @@
                         if(err) return;
                         if (count === 1){
                             L.marker(res.latlng).addTo(map).bindPopup(res.address.Match_addr).openPopup();
+                            ;
                              start_lat =res.latlng['lat'];
                              start_lon =res.latlng['lng'];
+                             console.log(start);
                         }
                         else if(count===2){
                             L.marker(res.latlng).addTo(map).bindPopup(res.address.Match_addr).openPopup();
@@ -344,17 +355,21 @@
                             count=0;
                             window.location.replace(route_url);
                         }
-                    });
-                    }
-                    else {
-                        console.log('e не найдено')
-                    }
+                 });
+                 }
+                 else {
+                     console.log('e не найдено')
+                 }
              });
          }
 
 <!--маршрут и переход на навигацию-->
          function getRouteNavigationCoordinates () {
             exit.style.display = 'block';
+            formBlock.style.display = 'block';
+            document.getElementById('info-wrapper').style.display = 'none';
+
+
             map.on('click', function (e){
                 count += 1;
                 console.log(e);
@@ -363,17 +378,22 @@
                         if(err) return;
                         if (count === 1){
                             L.marker(res.latlng).addTo(map).bindPopup(res.address.Match_addr).openPopup();
+                            start.value = res.address.Match_addr;
                              start_lat =res.latlng['lat'];
                              start_lon =res.latlng['lng'];
+                             console.log(start);
                         }
                         else if(count===2){
                             L.marker(res.latlng).addTo(map).bindPopup(res.address.Match_addr).openPopup();
+                            destination.value = res.address.Match_addr;
                             end_lat =res.latlng['lat'];
                             end_lon =res.latlng['lng'];
                             const baseurl="{% url 'main' %}";
                             const route_url=baseurl + 'navigation/' + start_lat + ','+ start_lon +','+ end_lat+','+end_lon;
                             count=0;
-                            window.location.replace(route_url);
+                            if (!start.value.includes("Екатеринбург")|!destination.value.includes("Екатеринбург")) {
+                                window.location.replace(route_url);
+                            }
                         }
                     });
                 }
